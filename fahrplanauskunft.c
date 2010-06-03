@@ -1,5 +1,5 @@
 #include "fahrplanauskunft.h"
-
+//hash-table in working progress
 
 
 int main(int argc, char *argv[]) 
