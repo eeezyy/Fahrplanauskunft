@@ -4,6 +4,8 @@
 
 int main(int argc, char *argv[]) 
 {
+	// TO-DO change parameter, using getop, 
+	// for use in terminal and webinterface
 	if(argc != 2)
 	{
 		printF1();
