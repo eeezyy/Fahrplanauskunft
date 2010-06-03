@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#define NOTVISITED 0
+#define VISITED_BEGINN 1
+#define VISITED_END 2
+#define SIZE 2003
 
 // EINLESE-STRUCT
 typedef struct node
@@ -19,10 +23,6 @@ typedef struct edge
 	char mark[10];
 	struct edge *next;
 } path;
-
-#define NOTVISITED 0
-#define VISITED_BEGINN 1
-#define VISITED_END 2
 
 void heapInsert(station insert);
 station heapGetMin();
