@@ -8,7 +8,7 @@ all: ${PROGRAM}
 ${PROGRAM}: ${PROGRAM}.o
 	gcc ${CFLAGS} -o ${PROGRAM} ${PROGRAM}.o
 
-${PROGRAM}.o: ${PROGRAM}.c
+${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
 	
 check: check1 check2

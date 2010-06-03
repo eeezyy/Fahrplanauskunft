@@ -3,14 +3,29 @@
 #include <unistd.h>
 
 // EINLESE-STRUCT
-struct subway
+typedef struct node
 {
-	char station[25];
-	int time;
-	
-	subway* nxt;
-	//subway* prev;
-};
+	char name[50];
+	int id;
+	int prev;
+	int lengthSum;
+	int visited;
+} station;
+
+typedef struct edge
+{
+	station *halt;
+	int length;
+	char mark[10];
+	struct edge *next;
+} path;
+
+#define NOTVISITED 0
+#define VISITED_BEGINN 1
+#define VISITED_END 2
+
+void heapInsert(station insert);
+station heapGetMin();
 
 // USAGE-NACHRICHT
 void printF1()
