@@ -24,6 +24,13 @@ typedef struct edge
 	struct edge *next;
 } path;
 
+typedef struct treenode
+{
+	station *halt;
+	struct treenode *prev;
+	struct treenode *next;
+} heapnode;
+
 void heapInsert(station insert);
 station heapGetMin();
 

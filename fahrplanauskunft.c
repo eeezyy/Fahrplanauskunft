@@ -4,8 +4,7 @@
 
 int main(int argc, char *argv[]) 
 {
-	// TO-DO change parameter, using getop, 
-	// for use in terminal and webinterface
+	// One parameter, filename
 	if(argc != 2)
 	{
 		printF1();
