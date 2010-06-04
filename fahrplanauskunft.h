@@ -58,34 +58,45 @@ void load(char* readIn)
 	if(input)
 	{
 		read = fgets(buffer,501,input);
-		if(read == NULL)
+		while(read == NULL)
 		{
-			while (fgets (buffer, 501, input)!=NULL)
-			{
 				read = fgets(buffer, 501,input);
 				if(read != NULL)
 				{
 					break;
 				}
-			}
 		}
 		
-		while(read != NULL)
+		while(feof(input) == 0)
 		{
 			zahl = 0;
 			turn = 0;
-			token = strtok(read,":");
+			
+			
+			if(read == NULL)
+			{
+				while(read == NULL)
+				{
+					read = fgets(buffer, 501,input);
+					if(read != NULL)
+					{
+						break;
+					}
+				}
+			}
+			
+			
+			
+			token = strtok(read,":\t");
 			strcpy(linie,token);
 				//fprintf(stdout, "LINIE: %s\n",linie);
 				while(strcmp(token,"\n") != 0)
 				{
-					token = strtok(NULL,"\"");
-					
-						if(strcmp(token," ") == 0)
-						{
-							token = strtok(NULL,"\"");
-						}
-					
+					token = strtok(NULL,"\"\t");
+					while((strcmp(token," ") == 0) || (strcmp(token,"\t") == 0))
+					{
+						token = strtok(NULL,"\"");
+					}
 					//fprintf(stdout, "%s\t",token);
 					
 					// saving the first  station as "st1"
@@ -106,14 +117,15 @@ void load(char* readIn)
 				{		
 					while(strcmp(token,"\n") != 0)
 					{
-						token = strtok(NULL,"\"");
+						token = strtok(NULL,"\"\t");
 						
-							if(strcmp(token," ") == 0)
+							while((strcmp(token," ") == 0) || (strcmp(token,"\t") == 0))
 							{
-								token = strtok(NULL,"\"");
+								token = strtok(NULL,"\"\t");
 							}
 						strcpy(st1,st2);
 						//fprintf(stdout, "%s\t",token);
+							
 							zahl++;
 	
 						// saving the time as "timeBetween"
@@ -150,11 +162,25 @@ void load(char* readIn)
 										fprintf(stdout,"\nLINIE: %s\t1.Station: %s\tDauer:%d\t2.Station %s\n", linie, st1,timeBetween,st2);
 							}
 					
+						if((read == NULL))
+						{
+							while(read == NULL)
+							{
+								read = fgets(buffer, 501,input);
+								if(read != NULL)
+								{
+									break;
+								}
+							}
+						}
+					
 					}
 				}	
 			}
 			read = fgets(buffer, 501,input);
 		}
+		
+		fclose(input);
 	}
 	else
 	{
