@@ -6,6 +6,7 @@
 #define VISITED_BEGINN 1
 #define VISITED_END 2
 #define SIZE 2003
+#define BUFFERSIZE 501
 
 // EINLESE-STRUCT
 typedef struct node
@@ -34,6 +35,8 @@ typedef struct treenode
 
 void heapInsert(station insert);
 station heapGetMin();
+void load(char *readIn);
+char *trimTabsAndBlanks(char *string);
 
 // USAGE-NACHRICHT
 void printF1()
@@ -41,7 +44,85 @@ void printF1()
 	fprintf(stderr, "USAGE: ./fahrplanauskunft FILE\n");
 }
 
-void load(char* readIn)
+void load(char *readIn) {
+	FILE *input;
+	//char *read;
+	char *token;
+	char buffer[BUFFERSIZE];
+
+	input = fopen(readIn, "r");
+	if(!input) {
+		return;
+	}
+
+	while(fgets(buffer, BUFFERSIZE, input) != NULL) {
+		token = trimTabsAndBlanks(strtok(buffer, ":\n"));
+		if (token != NULL) {
+			fprintf(stdout, "Station: %s\n", token);
+			// unimportant characters
+			strtok(NULL, "\"");
+			// Parse 1. station
+			token = trimTabsAndBlanks(strtok(NULL, "\""));
+			if (token != NULL) {
+				fprintf(stdout, token);
+			} else {
+				continue	;
+			}
+			do {
+				// Parse lenght, \n for after the last station
+				token = trimTabsAndBlanks(strtok(NULL, "\"\n"));
+				if(token == NULL) {
+					break;
+				}
+				int length = atoi(token);
+				fprintf(stdout, "length '%s', %i\n", token, length);
+				// Parse station
+				token = trimTabsAndBlanks(strtok(NULL, "\""));
+				fprintf(stdout, token);
+			} while (token != NULL);
+			fprintf(stdout, "\n");
+		}
+	}
+}
+
+char *trimTabsAndBlanks(char *string) {
+	// use more efficient 
+	char *buffer = malloc(BUFFERSIZE * sizeof(char));
+	int i;
+	int wasBlank = 0;
+	int wasTab = 0;
+	int newIterator = 0;
+	if(string != NULL) {
+		for(i = 0, newIterator = 0; i < strlen(string); i++, newIterator++) {
+			if(string[i]!=' ' && string[i]!='\t') {
+				buffer[newIterator] = string[i];
+				wasBlank = 0;
+				wasTab = 0;
+			} else if(string[i]==' ') {
+				//if(wasBlank==0 && i!=0) {
+				if(wasBlank==0) {
+					buffer[newIterator] = string[i];
+					wasBlank = 1;
+				} else {
+					newIterator--;
+				}
+			} else if(string[i]=='\t') {
+				//if(wasTab==0 && i!=0) {				
+				if(wasTab==0) {
+					buffer[newIterator] = string[i];
+					wasTab = 1;
+				} else {
+					newIterator--;
+				}
+			}
+		}
+	} else {
+		return string;
+	}
+	return buffer;
+}
+
+void load2(char* readIn)
 {
 	FILE *input;
 	char* read = NULL;
@@ -57,37 +138,17 @@ void load(char* readIn)
 	input = fopen(readIn, "r");
 	if(input)
 	{
-		read = fgets(buffer,501,input);
-		while(read == NULL)
-		{
-				read = fgets(buffer, 501,input);
-				if(read != NULL)
-				{
-					break;
-				}
-		}
-		
+	
 		while(feof(input) == 0)
 		{
 			zahl = 0;
 			turn = 0;
 			
+			do {
+				read = fgets(buffer, 501, input);
+			} while(read == NULL);
 			
-			if(read == NULL)
-			{
-				while(read == NULL)
-				{
-					read = fgets(buffer, 501,input);
-					if(read != NULL)
-					{
-						break;
-					}
-				}
-			}
-			
-			
-			
-			token = strtok(read,":\t");
+			token = strtok(read,":");
 			strcpy(linie,token);
 				//fprintf(stdout, "LINIE: %s\n",linie);
 				while(strcmp(token,"\n") != 0)
