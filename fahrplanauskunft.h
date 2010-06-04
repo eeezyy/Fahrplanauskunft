@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include "heap.h"
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define VISITED_END 2
 #define SIZE 2003
 #define BUFFERSIZE 501
+
+char *programname;
 
 // EINLESE-STRUCT
 typedef struct node
@@ -33,15 +36,13 @@ typedef struct treenode
 	struct treenode *next;
 } heapnode;
 
-void heapInsert(station insert);
-station heapGetMin();
 void load(char *readIn);
 char *trimTabsAndBlanks(char *string);
 
 // USAGE-NACHRICHT
 void printF1()
 {
-	fprintf(stderr, "USAGE: ./fahrplanauskunft FILE\n");
+	fprintf(stderr, "USAGE: %s FILENAME\n", programname);
 }
 
 void load(char *readIn) {
@@ -52,7 +53,8 @@ void load(char *readIn) {
 
 	input = fopen(readIn, "r");
 	if(!input) {
-		return;
+		fprintf(stderr,"File doesn't exist.\n");
+		exit(EXIT_FAILURE);
 	}
 
 	while(fgets(buffer, BUFFERSIZE, input) != NULL) {
@@ -74,7 +76,7 @@ void load(char *readIn) {
 				if(token == NULL) {
 					break;
 				}
-				int length = atoi(token);
+				int length = (int)strtol(token, NULL, 10);
 				fprintf(stdout, "length '%s', %i\n", token, length);
 				// Parse station
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
@@ -87,18 +89,20 @@ void load(char *readIn) {
 
 char *trimTabsAndBlanks(char *string) {
 	// use more efficient 
-	char *buffer = malloc(BUFFERSIZE * sizeof(char));
+	char *buffer;
 	int i;
 	int wasBlank = 0;
 	int wasTab = 0;
 	int newIterator = 0;
 	if(string != NULL) {
+		buffer = malloc(BUFFERSIZE * sizeof(char));
 		for(i = 0, newIterator = 0; i < strlen(string); i++, newIterator++) {
 			if(string[i]!=' ' && string[i]!='\t') {
 				buffer[newIterator] = string[i];
 				wasBlank = 0;
 				wasTab = 0;
 			} else if(string[i]==' ') {
+				// to remove first blank
 				//if(wasBlank==0 && i!=0) {
 				if(wasBlank==0) {
 					buffer[newIterator] = string[i];
@@ -107,6 +111,7 @@ char *trimTabsAndBlanks(char *string) {
 					newIterator--;
 				}
 			} else if(string[i]=='\t') {
+				// to remove first tab
 				//if(wasTab==0 && i!=0) {				
 				if(wasTab==0) {
 					buffer[newIterator] = string[i];
