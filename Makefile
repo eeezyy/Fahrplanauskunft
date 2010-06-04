@@ -2,7 +2,7 @@
 VERSION=2.0.0
 CFLAGS=-g -Wall -O
 PROGRAM=fahrplanauskunft
-CHECKFAILURESCRIPT=checkfailure.sh
+CHECKSCRIPT=check.sh
 
 all: ${PROGRAM}
 
@@ -12,13 +12,8 @@ ${PROGRAM}: ${PROGRAM}.o
 ${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
 	
-check: check1 check2
-
-check1:
-	./${CHECKFAILURESCRIPT} ${PROGRAM}
-	
-check2:
-	./${PROGRAM} ubahn.txt > /dev/null
+check: ${CHECKSCRIPT} ${PROGRAM}
+	./${CHECKSCRIPT} ${PROGRAM}
 
 clean:
 	rm -f ./${PROGRAM}
