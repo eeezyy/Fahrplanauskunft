@@ -79,7 +79,7 @@ void load(char *readIn) {
 					break;
 				}
 				length = (int)strtol(token, NULL, 10);
-				fprintf(stdout, "length '%s', %i\n", token, length);
+				//fprintf(stdout, "length '%s', %i\n", token, length);
 				// Parse station
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
 				if(token != NULL) {
@@ -90,7 +90,6 @@ void load(char *readIn) {
 				fprintf(stdout, "Mark: '%s', halt1: '%s', halt2: '%s', length: '%i'\n", mark, halt1, halt2, length);
 				halt1 = halt2;
 			} while (token != NULL);
-			fprintf(stdout, "\n");
 		}
 	}
 }
