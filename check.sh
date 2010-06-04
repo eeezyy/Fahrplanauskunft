@@ -1,9 +1,11 @@
+echo "--------------------------------------------------------"
+
 PROGRAM=$1
 EXIT_SUCCESS=0
 EXIT_FAILURE=1
 COUNTTEST=0
 NOPARAMETER=
-ZWOPARAMETER=ubahn.txt empty
+ZWOPARAMETER="ubahn.txt empty"
 NONEXISTFILE=nonexistfile
 EMPTYFILE=empty
 EXAMPLEFILE=ubahn.txt
@@ -14,12 +16,13 @@ EXAMPLEFILE=ubahn.txt
 # 2. parameter is test description
 checkTest () {
 	COUNTTEST=`expr $COUNTTEST + 1`
+	echo "$COUNTTEST. Test: $3"
 	./${PROGRAM} $1 > /dev/null
 	if test $? -eq $2
 	then
-		echo "$COUNTTEST. Test Successful: $3"
+		echo "Successful"
 	else
-		echo "$COUNTTEST. Test Fail: $3"
+		echo "Fail"
 		echo "Return value expected $2 but was $?"
 		exit $EXIT_FAILURE
 	fi
