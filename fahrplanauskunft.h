@@ -72,7 +72,8 @@ void load(char *readIn) {
 			}
 			do {
 				// Parse lenght, \n for after the last station
-				token = trimTabsAndBlanks(strtok(NULL, "\"\n"));
+				// there is no need to trim tabs and blanks
+				token = strtok(NULL, "\"\n");
 				if(token == NULL) {
 					break;
 				}
