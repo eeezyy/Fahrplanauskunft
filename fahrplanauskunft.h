@@ -29,13 +29,6 @@ typedef struct edge
 	struct edge *next;
 } path;
 
-typedef struct treenode
-{
-	station *halt;
-	struct treenode *prev;
-	struct treenode *next;
-} heapnode;
-
 void load(char *readIn);
 char *trimTabsAndBlanks(char *string);
 
@@ -47,8 +40,11 @@ void printF1()
 
 void load(char *readIn) {
 	FILE *input;
-	//char *read;
 	char *token;
+	char *mark;
+	char *halt1;
+	char *halt2 = NULL;
+	int length;
 	char buffer[BUFFERSIZE];
 
 	input = fopen(readIn, "r");
@@ -60,14 +56,19 @@ void load(char *readIn) {
 	while(fgets(buffer, BUFFERSIZE, input) != NULL) {
 		token = trimTabsAndBlanks(strtok(buffer, ":\n"));
 		if (token != NULL) {
-			fprintf(stdout, "Station: %s\n", token);
+			mark = token;
+			//fprintf(stdout, "Station: %s\n", token);
+
 			// unimportant characters
 			strtok(NULL, "\"");
 			// Parse 1. station
 			token = trimTabsAndBlanks(strtok(NULL, "\""));
 			if (token != NULL) {
-				fprintf(stdout, token);
+				// create here halt1 struct
+				halt1 = token;
+				//fprintf(stdout, token);
 			} else {
+				// parse next line
 				continue	;
 			}
 			do {
@@ -77,11 +78,17 @@ void load(char *readIn) {
 				if(token == NULL) {
 					break;
 				}
-				int length = (int)strtol(token, NULL, 10);
+				length = (int)strtol(token, NULL, 10);
 				fprintf(stdout, "length '%s', %i\n", token, length);
 				// Parse station
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
-				fprintf(stdout, token);
+				if(token != NULL) {
+					halt2 = token;
+					//fprintf(stdout, token);
+				}
+				// Create here path struct and halt2 struct
+				fprintf(stdout, "Mark: '%s', halt1: '%s', halt2: '%s', length: '%i'\n", mark, halt1, halt2, length);
+				halt1 = halt2;
 			} while (token != NULL);
 			fprintf(stdout, "\n");
 		}
