@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include "heap.h"
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define VISITED_END 2
-#define SIZE 2003
+#define SIZE (long) 2003
 #define BUFFERSIZE 501
 
 char *programname;
@@ -31,6 +32,9 @@ typedef struct edge
 
 void load(char *readIn);
 char *trimTabsAndBlanks(char *string);
+long makeHash(long size, char* term);
+void chomp(char *str);
+station* initHalt(station* init);
 
 // USAGE-NACHRICHT
 void printF1()
@@ -44,7 +48,7 @@ void load(char *readIn) {
 	char *mark;
 	char *halt1;
 	char *halt2 = NULL;
-	int length;
+	int length,hash1,hash2;
 	char buffer[BUFFERSIZE];
 
 	input = fopen(readIn, "r");
@@ -66,6 +70,7 @@ void load(char *readIn) {
 			if (token != NULL) {
 				// create here halt1 struct
 				halt1 = token;
+				
 				//fprintf(stdout, token);
 			} else {
 				// parse next line
@@ -84,10 +89,13 @@ void load(char *readIn) {
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
 				if(token != NULL) {
 					halt2 = token;
+					
 					//fprintf(stdout, token);
 				}
+				hash1 = (int) makeHash(SIZE, halt1);
+				hash2 = (int) makeHash(SIZE, halt2);
 				// Create here path struct and halt2 struct
-				fprintf(stdout, "Mark: '%s', halt1: '%s', halt2: '%s', length: '%i'\n", mark, halt1, halt2, length);
+				fprintf(stdout, "Mark: '%s', halt1: '%s' hash: %d, halt2: '%s' hash: %d, length: '%i'\n", mark, halt1, hash1, halt2,hash2, length);
 				halt1 = halt2;
 			} while (token != NULL);
 		}
@@ -146,6 +154,8 @@ void load2(char* readIn)
 	char buffer[501];
 	int zahl;
 	int turn;
+	int hash1;
+	int hash2;
 	
 	input = fopen(readIn, "r");
 	if(input)
@@ -174,6 +184,7 @@ void load2(char* readIn)
 					
 					// saving the first  station as "st1"
 							strcpy(st1,"NULL");
+							hash1 = (int) makeHash(SIZE, st1);
 					// saving the time as "timeBetween"
 							timeBetween = 0;
 							zahl++;
@@ -181,7 +192,8 @@ void load2(char* readIn)
 						if(zahl == 1)
 						{
 							strcpy(st2,token);
-							fprintf(stdout,"LINIE: %s\t1.Station: %s\tDauer:%d\t2.Station %s\n", linie, st1,timeBetween,st2);
+							hash2 = (int) makeHash(SIZE, st2);
+							fprintf(stdout,"LINIE: %s\t1.Station: %s\thash: %d\tDauer:%d\t2.Station %s\thash: %d\n", linie, st1, hash1,timeBetween,st2,hash2);
 							zahl = 0;
 							turn = 1;
 						}
@@ -197,6 +209,7 @@ void load2(char* readIn)
 								token = strtok(NULL,"\"\t");
 							}
 						strcpy(st1,st2);
+						hash1 = (int) makeHash(SIZE, st1);
 						//fprintf(stdout, "%s\t",token);
 							
 							zahl++;
@@ -211,8 +224,8 @@ void load2(char* readIn)
 							if(zahl == 2)
 							{
 								strcpy(st2,token);
-								
-								fprintf(stdout,"\nNEWLINIE: %s\t1.Station: %s\tDauer:%d\t2.Station %s\n", linie, st1,timeBetween,st2);
+								hash2 = (int) makeHash(SIZE, st2);
+								fprintf(stdout,"\nNEWLINIE: %s\t1.Station: %s\thash: %d\tDauer:%d\t2.Station %s\thash: %d\n", linie, st1, hash1,timeBetween,st2,hash2);
 								zahl = 0;
 							}
 							if(strcmp(token,"\n") == 0)
@@ -235,17 +248,7 @@ void load2(char* readIn)
 										fprintf(stdout,"\nLINIE: %s\t1.Station: %s\tDauer:%d\t2.Station %s\n", linie, st1,timeBetween,st2);
 							}
 					
-						if((read == NULL))
-						{
-							while(read == NULL)
-							{
-								read = fgets(buffer, 501,input);
-								if(read != NULL)
-								{
-									break;
-								}
-							}
-						}
+				
 					
 					}
 				}	
@@ -262,11 +265,57 @@ void load2(char* readIn)
 }
 
 
-void chomp(char *str) {
+void chomp(char *str) 
+{
    size_t p=strlen(str);
    /* '\n' mit '\0' überschreiben */
    if(str[p-1] == '\n')
    {
 	str[p-1]='\0';
    }
+}
+
+long makeHash(long size, char *term)
+{
+	int i=0;
+	long hash = 0;
+	int termlength = 0;
+	long double factor;
+
+
+	if (strlen(term)==0)
+		return -1;
+		
+	termlength=strlen(term);	//bezeichnet die Stringlänge n
+		
+	factor=31;			
+	factor= pow(factor,termlength); //wird für die for-Schleife verwendet
+
+	for (i=0; i < termlength; i++)
+	{
+		factor = (factor/31);
+		hash=(int)(hash + term[i]*factor)%size;
+	}
+	return hash;
+}
+
+station* initHalt(station* init)
+{
+	station* stInit;
+	stInit = (station*)malloc(sizeof(station));
+
+/*
+ * char name[50];
+ * int id;
+ * int prev;
+ * int lengthSum;
+ * int visited;
+*/
+		strcpy(stInit->name, "NULL");
+		stInit->id = 0;
+		stInit->prev = 0;
+		stInit->lengthSum = 0;
+		stInit->visited = -1;
+		
+		return stInit;
 }

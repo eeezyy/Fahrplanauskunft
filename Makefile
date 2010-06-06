@@ -1,16 +1,16 @@
 # Makefile for tron
 VERSION=2.0.0
-CFLAGS=-g -Wall -O
+CFLAGS=-g -Wall -O -lm
 PROGRAM=fahrplanauskunft
 CHECKSCRIPT=check.sh
 
 all: ${PROGRAM}
 
 ${PROGRAM}: ${PROGRAM}.o
-	gcc ${CFLAGS} -o ${PROGRAM} ${PROGRAM}.o
+	gcc ${CFLAGS} -o  ${PROGRAM} ${PROGRAM}.o
 
 ${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h
-	gcc ${CFLAGS} -c ${PROGRAM}.c
+	gcc ${CFLAGS} -c -lm ${PROGRAM}.c
 	
 check: ${CHECKSCRIPT} ${PROGRAM}
 	./${CHECKSCRIPT} ${PROGRAM}
