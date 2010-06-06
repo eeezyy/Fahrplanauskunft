@@ -33,8 +33,10 @@ int main(int argc, char *argv[])
 	
 	for(i = 0; i < SIZE; i++)
 	{
+		printHalt(stationlist[i].halt);
 		fprintf(stdout,"Länge: %d\tLinie: %s\n",stationlist[i].length, stationlist[i].mark);
-		printHalt(stationlist[i].
+		// funktion, das 2te struct ausgegeben wird. 
+		
 	}	
 	return EXIT_SUCCESS;
 }

@@ -34,7 +34,8 @@ void load(char *readIn);
 char *trimTabsAndBlanks(char *string);
 long makeHash(long size, char* term);
 void chomp(char *str);
-station* initHalt(station* init);
+station* initHalt(station* halt);
+void printHalt(station *halt);
 
 // USAGE-NACHRICHT
 void printF1()
@@ -299,7 +300,7 @@ long makeHash(long size, char *term)
 	return hash;
 }
 
-station* initHalt(station* init)
+station* initHalt(station* halt)
 {
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
@@ -318,4 +319,9 @@ station* initHalt(station* init)
 		stInit->visited = -1;
 		
 		return stInit;
+}
+
+void printHalt(station* halt)
+{
+		fprintf(stdout,"stationname: %s\tID: %d\tPREV: %d\tSumme: %d\tvisited: %d ", halt->name, halt->id, halt->prev, halt->lengthSum, halt->visited);
 }
