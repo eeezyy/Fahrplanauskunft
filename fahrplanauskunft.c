@@ -1,4 +1,7 @@
+#include "types.h"
 #include "fahrplanauskunft.h"
+#include "heap.h"
+
 //hash-table in working progress
 
 
@@ -9,9 +12,7 @@ int main(int argc, char *argv[])
 	path* haltlist = stationlist;	//Pointer to Array-List(stationlist)
 	int i;
 	
-	
-	// TO-DO change parameter, using getop, 
-	// for use in terminal and webinterface
+	// One parameter for input filename
 	programname = argv[0];
 	if(argc != 2)
 	{

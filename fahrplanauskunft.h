@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
-#include "heap.h"
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define VISITED_END 2
@@ -11,24 +10,6 @@
 #define BUFFERSIZE 501
 
 char *programname;
-
-// EINLESE-STRUCT
-typedef struct node
-{
-	char name[50];
-	int id;
-	int prev;
-	int lengthSum;
-	int visited;
-} station;
-
-typedef struct edge
-{
-	station *halt;
-	int length;
-	char mark[10];
-	struct edge *next;
-} path;
 
 void load(char *readIn);
 char *trimTabsAndBlanks(char *string);
