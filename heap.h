@@ -1,14 +1,14 @@
 
 
 // insert new node in heap
-void heapNodeInsert(heapnode *root, station *insert);
+heapnode *heapNodeInsert(heapnode **root, station *insert);
 // return the smallest node (station with minimal distance)
-station *heapNodeRemove(heapnode *root);
+station *heapNodeRemove(heapnode **root);
 // change the value of one node and rearrange the heap
-void heapNodeChange(heapnode *root, station *change, int newLength);
-heapnode *mergeHeaps(heapnode *P, heapnode *Q);
+void heapNodeChange(heapnode **root, station *change, int newLength);
+heapnode *mergeHeaps(heapnode **S, heapnode *Q);
 
-void heapNodeInsert(heapnode *root, station *insert) {
+heapnode *heapNodeInsert(heapnode **root, station *insert) {
 	heapnode *newNode = (heapnode *)malloc(sizeof(heapnode));
 	// initialize heapnode
 	newNode->halt = insert;
@@ -16,21 +16,28 @@ void heapNodeInsert(heapnode *root, station *insert) {
 	newNode->left = NULL;
 	newNode->right = NULL;
 
-	root = mergeHeaps(root, newNode);
+	if(root == NULL)
+		fprintf(stdout, "%s\n", newNode->halt->name);
+	else
+		//fprintf(stdout, "ROOT!=NULL, %s, %s\n", *root->halt->name, newNode->halt->name);
+	return mergeHeaps(root, newNode);
 }
 
-heapnode *mergeHeaps(heapnode *P, heapnode *Q) {
+heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 	int D;
 	// M1
 	heapnode *R = NULL;
 	heapnode *T;
+	heapnode *P = *S;
 	// M2
 	while(1) {
 		if(Q == NULL) {
+			fprintf(stdout, "Q == NULL\n");
 			D = (P == NULL)? 1 : P->dist;
 			break;
 		}
 		if(P == NULL) {
+			fprintf(stdout, "P == NULL\n");
 			P = Q;
 			D = 0;
 			break;
@@ -40,17 +47,24 @@ heapnode *mergeHeaps(heapnode *P, heapnode *Q) {
 			P->right = R;
 			R = P;
 			P = T;
+		} else {
+			T = Q->right;
+			Q->right = R;
+			R = Q;
+			Q = T;
 		}
 	}
 
 	while(1) {
 		// M3
 		if(R == NULL) {
+			//fprintf(stdout, "R == NULL\n");
+			*S = P;
 			return P;
 		}
 		// M4
 		Q = R->right;
-		if(R->left->dist < D) {
+		if(R->left != NULL && R->left->dist < D) {
 			D = R->left->dist + 1;
 			R->right = R->left;
 			R->left = P;
@@ -64,14 +78,20 @@ heapnode *mergeHeaps(heapnode *P, heapnode *Q) {
 	}
 }
 
-station *heapNodeRemove(heapnode *root) {
-	heapnode *temp = root;
-	station *halt = root->halt;
-	root = mergeHeaps(root->left, root->right);
-	free(temp);
-	return halt;
+station *heapNodeRemove(heapnode **S) {
+	heapnode *root = *S;
+	if(root != NULL) {
+		heapnode *temp = root;
+		station *halt = root->halt;
+		fprintf(stdout, "before merge in remove\n");
+		root = mergeHeaps(root->left, root->right);
+		fprintf(stdout, "before merge in remove\n");
+		free(temp);
+		return halt;
+	}
+	return NULL;
 }
 
-void heapNodeChange(heapnode *root, station *change, int newLength) {
+void heapNodeChange(heapnode **root, station *change, int newLength) {
 
 }
