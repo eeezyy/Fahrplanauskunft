@@ -6,17 +6,17 @@
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define VISITED_END 2
-#define SIZE (long) 2003
 #define BUFFERSIZE 501
+long SIZE = 0;
 
 char *programname;
-
-void load(char *readIn);
+int load(char *readIn);
 char *trimTabsAndBlanks(char *string);
 long makeHash(long size, char* term);
 void chomp(char *str);
 station* initHalt(station* halt);
 void printHalt(station *halt);
+//void setValue(path* haltlist, char* st1, int time, char* st2);
 
 // USAGE-NACHRICHT
 void printF1()
@@ -24,7 +24,7 @@ void printF1()
 	fprintf(stderr, "USAGE: %s FILENAME\n", programname);
 }
 
-void load(char *readIn) {
+int load(char *readIn) {
 	FILE *input;
 	char *token;
 	char *mark;
@@ -32,6 +32,7 @@ void load(char *readIn) {
 	char *halt2 = NULL;
 	int length,hash1,hash2;
 	char buffer[BUFFERSIZE];
+	int counter = 0;
 
 	input = fopen(readIn, "r");
 	if(!input) {
@@ -52,7 +53,7 @@ void load(char *readIn) {
 			if (token != NULL) {
 				// create here halt1 struct
 				halt1 = token;
-				
+				counter++;
 				//fprintf(stdout, token);
 			} else {
 				// parse next line
@@ -71,17 +72,19 @@ void load(char *readIn) {
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
 				if(token != NULL) {
 					halt2 = token;
-					
+					counter++;
 					//fprintf(stdout, token);
 				}
-				hash1 = (int) makeHash(SIZE, halt1);
-				hash2 = (int) makeHash(SIZE, halt2);
+				//hash1 = (int) makeHash(SIZE, halt1);
+				//hash2 = (int) makeHash(SIZE, halt2);
 				// Create here path struct and halt2 struct
 				fprintf(stdout, "Mark: '%s', halt1: '%s' hash: %d, halt2: '%s' hash: %d, length: '%i'\n", mark, halt1, hash1, halt2,hash2, length);
 				halt1 = halt2;
 			} while (token != NULL);
 		}
 	}
+	//fprintf(stdout,"Anzahl der stationen %d\n", counter);
+	return counter;
 }
 
 char *trimTabsAndBlanks(char *string) {
@@ -285,14 +288,6 @@ station* initHalt(station* halt)
 {
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
-
-/*
- * char name[50];
- * int id;
- * int prev;
- * int lengthSum;
- * int visited;
-*/
 		strcpy(stInit->name, "NULL");
 		stInit->id = 0;
 		stInit->prev = 0;
