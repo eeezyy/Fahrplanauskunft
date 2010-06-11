@@ -9,7 +9,7 @@ all: ${PROGRAM}
 ${PROGRAM}: ${PROGRAM}.o
 	gcc ${CFLAGS} -o ${PROGRAM} ${PROGRAM}.o
 
-${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h
+${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h types.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
 	
 check: ${CHECKSCRIPT} ${PROGRAM}

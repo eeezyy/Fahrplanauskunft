@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 		// funktion, das 2te struct ausgegeben wird. 
 		
 	}	*/
-	heapnode **heap;
+	heapnode **heap = NULL;
 	station st1;
 	strcpy(st1.name,"Station1");
 	st1.lengthSum = 3;
@@ -60,18 +60,65 @@ int main(int argc, char *argv[])
 	strcpy(st5.name,"Station5");
 	st5.lengthSum = 5;
 
+	heapnode *temp;
+
 	heapNodeInsert(heap, &st1);
+	if (heap!=NULL) {
+	temp = *heap;
+	if(temp != NULL){
+		fprintf(stdout, "1. %s\n", temp->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "1. left %s\n", temp->left->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "1. right %s\n", temp->right->halt->name);
+	}}
 	heapNodeInsert(heap, &st2);
+	if (heap!=NULL) {
+	temp = *heap;
+	if(temp != NULL){
+		fprintf(stdout, "2. %s\n", temp->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "2. left %s\n", temp->left->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "2. right %s\n", temp->right->halt->name);
+	}}
 	heapNodeInsert(heap, &st3);
+	if (heap!=NULL) {
+	temp = *heap;
+	if(temp != NULL){
+		fprintf(stdout, "3. %s\n", temp->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "3. left %s\n", temp->left->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "3. right %s\n", temp->right->halt->name);
+	}}
 	heapNodeInsert(heap, &st4);
+	if (heap!=NULL) {
+	temp = *heap;
+	if(temp != NULL){
+		fprintf(stdout, "4. %s\n", temp->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "4. left %s\n", temp->left->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "4. right %s\n", temp->right->halt->name);
+	}}
 	heapNodeInsert(heap, &st5);
+	if (heap!=NULL) {
+	temp = *heap;
+	if(temp != NULL){
+		fprintf(stdout, "5. %s\n", temp->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "5. left %s\n", temp->left->halt->name);
+		if(temp->left != NULL)
+			fprintf(stdout, "5. right %s\n", temp->right->halt->name);
+	}}
 
 	station *out = NULL;
 
 	//out = heapNodeRemove(heap);
 	do {
 		out = heapNodeRemove(heap);
-		fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
+		//fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
 	} while(out != NULL);
 	return EXIT_SUCCESS;
 }
