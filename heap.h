@@ -51,7 +51,7 @@ heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 			D = 0;
 			break;
 		}
-		if(P->halt->lengthSum >= Q->halt->lengthSum) {
+		if(P->halt->lengthSum <= Q->halt->lengthSum) {
 			T = P->right;
 			P->right = R;
 			R = P;
