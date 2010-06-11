@@ -68,7 +68,8 @@ heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 		// M3
 		if(R == NULL) {
 			fprintf(stdout, "R == NULL\n");
-			//*S = P;
+			fprintf(stdout, "heap-address %i\n", (int)S);
+			*S = P;
 			return P;
 		}
 		// M4
@@ -88,17 +89,19 @@ heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 }
 
 station *heapNodeRemove(heapnode **S) {
-	heapnode *root = *S;
-	if(root != NULL) {
+	
+	if(*S != NULL) {
+		heapnode *root = *S;
 		heapnode *temp = root;
 		station *halt = root->halt;
 		fprintf(stdout, "before merge in remove\n");
 		//root = mergeHeaps(root->left, root->right);
-		mergeHeaps(&root->left, root->right);
-		fprintf(stdout, "before merge in remove\n");
+		*S = mergeHeaps(&(*S)->left, root->right);
+		fprintf(stdout, "after merge in remove\n");
 		free(temp);
 		return halt;
 	}
+	fprintf(stdout, "HeapNodeRemove NULL\n");
 	return NULL;
 }
 

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 	
-	readIn = argv[1];
+	/*readIn = argv[1];
 	j = load(readIn);
 	SIZE = (long)(4 * j + 3);
 	fprintf(stdout, "SIZE: %ld", SIZE);
@@ -43,8 +43,10 @@ int main(int argc, char *argv[])
 		fprintf(stdout,"Länge: %d\tLinie: %s\n",stationlist[i].length, stationlist[i].mark);
 		// funktion, das 2te struct ausgegeben wird. 
 		
-	}	
-/*	heapnode **heap = NULL;
+	}	*/
+	heapnode **heap = (heapnode **)malloc(sizeof(heapnode *));
+	//heap = NULL;
+	fprintf(stdout, "heap-address: %i\n", (int)heap);
 	station st1;
 	strcpy(st1.name,"Station1");
 	st1.lengthSum = 3;
@@ -123,9 +125,10 @@ int main(int argc, char *argv[])
 	//out = heapNodeRemove(heap);
 	do {
 		out = heapNodeRemove(heap);
-		fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
+		if (out != NULL)
+			fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
 	} while(out != NULL);
-*/
+
 	return EXIT_SUCCESS;
 }
 
