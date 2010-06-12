@@ -205,9 +205,11 @@ void displaypath(path *inputp)
 		fprintf(stdout,"read-process launched\n");
 		while(inputp != NULL)
 		{
+			inputp = inputp->next;
+			if(inputp != NULL) {
 				fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", inputp->length, inputp->mark, inputp->halt->name);
-				inputp = inputp->next;
 				counter++;
+			}
 		}
 		fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
 }
