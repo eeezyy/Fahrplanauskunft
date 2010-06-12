@@ -56,7 +56,7 @@ int load(char *readIn, path* inputp) {
 			if (token != NULL) {
 				// create here halt1 struct
 				halt1 = token;
-//<! ---inputp = inputpath(mark,length,halt1,inputp);
+			inputp = inputpath(mark,length,halt1,inputp);
 				counter++;
 				//fprintf(stdout, token);
 			} else {
@@ -88,7 +88,7 @@ int load(char *readIn, path* inputp) {
 				// Create here path struct and halt2 struct
 				//fprintf(stdout, "Mark: '%s', halt1: '%s' hash: %d, halt2: '%s' hash: %d, length: '%i'\n", mark, halt1, hash1, halt2,hash2, length);
 				halt1 = halt2;
-//<! ---inputp = inputpath(mark,length,halt1,inputp);
+		inputp = inputpath(mark,length,halt1,inputp);
 			} while (token != NULL);
 		}
 	}
@@ -178,29 +178,32 @@ void printHalt(station* halt)
 		fprintf(stdout,"stationname: %s\tID: %d\tPREV: %d\tSumme: %d\tvisited: %d ", halt->name, halt->id, halt->prev, halt->lengthSum, halt->visited);
 }
 
+
 path* inputpath(char mark[10] , int length, char* st1, path* inputp)
 {
 	station* stat = (station*)malloc(sizeof(station));
 	strcpy(stat->name, st1);
-	
 	path *p = (path*) malloc(sizeof(path));
 	p->length = length;
 	strcpy(p->mark, mark);
 	p->halt = stat;
-	p->next = inputp->next;
-	inputp->next = p;
-	return p;
+	
+	if(inputp == NULL)
+	{
+		
+		inputp = p;
+	}
+	else
+	{
+		inputp->next = p;
+	}
+		return p;	
 }
 
 void displaypath(path *inputp)
 {
 		int counter = 0;
 		fprintf(stdout,"read-process launched\n");
-		if(strcmp(inputp->mark, "null"))
-		{
-			fprintf(stdout,"nullwert!\n\n");
-			inputp = inputp->next;
-		}
 		while(inputp->next != NULL)
 		{
 				fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", inputp->length, inputp->mark, inputp->halt->name);
@@ -209,3 +212,4 @@ void displaypath(path *inputp)
 		}
 		fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
 }
+
