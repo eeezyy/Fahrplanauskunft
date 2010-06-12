@@ -164,18 +164,18 @@ station* initHalt(station* halt)
 {
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
-		strcpy(stInit->name, "NULL");
-		stInit->id = 0;
-		stInit->prev = 0;
-		stInit->lengthSum = 0;
-		stInit->visited = -1;
-		
-		return stInit;
+	strcpy(stInit->name, "NULL");
+	stInit->id = 0;
+	stInit->prev = 0;
+	stInit->lengthSum = 0;
+	stInit->visited = -1;
+	
+	return stInit;
 }
 
 void printHalt(station* halt)
 {
-		fprintf(stdout,"stationname: %s\tID: %d\tPREV: %d\tSumme: %d\tvisited: %d ", halt->name, halt->id, halt->prev, halt->lengthSum, halt->visited);
+	fprintf(stdout,"stationname: %s\tID: %d\tPREV: %d\tSumme: %d\tvisited: %d ", halt->name, halt->id, halt->prev, halt->lengthSum, halt->visited);
 }
 
 
@@ -190,21 +190,20 @@ path* inputpath(char mark[10] , int length, char* st1, path* inputp)
 	
 	if(inputp == NULL)
 	{
-		
 		inputp = p;
 	}
 	else
 	{
 		inputp->next = p;
 	}
-		return p;	
+	return p;	
 }
 
 void displaypath(path *inputp)
 {
 		int counter = 0;
 		fprintf(stdout,"read-process launched\n");
-		while(inputp->next != NULL)
+		while(inputp != NULL)
 		{
 				fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", inputp->length, inputp->mark, inputp->halt->name);
 				inputp = inputp->next;

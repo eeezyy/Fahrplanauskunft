@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 	
-	path* inputp = (path*)malloc(sizeof(path));
+	path* inputp = (path *)malloc(sizeof(path));
+	//inputp = NULL;
 	readIn = argv[1];
 	j = load(readIn, inputp);
 	SIZE = (long)(4 * j + 3);
