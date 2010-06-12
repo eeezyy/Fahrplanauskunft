@@ -13,10 +13,11 @@ char *programname;
 int load(char *readIn, list **listRoot);
 char *trimTabsAndBlanks(char *string);
 long makeHash(long size, char* term);
-station* initHalt(station* halt);
+station* initHalt(char *halt);
 void printHalt(station *halt);
-path* initPath(char mark[10] , int length, char* st1);
+path* initPath(char mark[10] , int length);
 void displaypath(list **listRoot);
+int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark);
 
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
@@ -50,6 +51,10 @@ int load(char *readIn, list **listRoot) {
 		if (token != NULL) {
 			mark = token;
 
+			station *station0 = NULL;
+			station *station1;
+			station *station2;
+
 			// unimportant characters
 			strtok(NULL, "\"");
 			// parse 1. station
@@ -65,7 +70,9 @@ int load(char *readIn, list **listRoot) {
 					*listRoot = (list *)malloc(sizeof(list));
 					lastListNode = *listRoot;
 				}
-				lastListNode->p = initPath(mark,length,halt1);
+				lastListNode->p = initPath(mark, 0);
+				station1 = initHalt(halt1);
+				lastListNode->p->halt = station1;
 				counter++;
 			} else {
 				// parse next line
@@ -84,16 +91,45 @@ int load(char *readIn, list **listRoot) {
 				if(token != NULL) {
 					halt2 = token;
 					counter++;
-				}
-				halt1 = halt2;
+				} else break;
+
 				// save station in temporary list, to move later to hashtable
 				lastListNode->next = (list *)malloc(sizeof(list));
 				lastListNode = lastListNode->next;
-				lastListNode->p = initPath(mark,length,halt1);
+				lastListNode->p = initPath(mark, 0);
+				station2 = initHalt(halt2);
+				lastListNode->p->halt = station2;
+
+				// put into adjazenzlist
+				if(station0!=NULL)
+					adjazenzInsert(listRoot, station1, station0, length, mark);
+				adjazenzInsert(listRoot, station1, station2, length, mark);
+
+				halt1 = halt2;
+				station0 = station1;
+				station1 = station2;
 			} while (token != NULL);
 		}
 	}
 	return counter;
+}
+
+int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark) {
+	list *temp = *listRoot;
+	while(temp != NULL) {
+		if(temp->p->halt==stationFrom) {
+			path *pathNode = NULL;
+			if(temp->p->next != NULL) {
+				pathNode = temp->p->next;
+			}
+			temp->p->next = initPath(mark, length);
+			temp->p->next->halt = stationDestination;
+			temp->p->next->next = pathNode;
+			return 1;
+		}
+		temp = temp->next;
+	}
+	return 0;
 }
 
 char *trimTabsAndBlanks(char *string) {
@@ -168,15 +204,15 @@ long makeHash(long size, char *term)
 	return hash;
 }
 
-station* initHalt(station* halt)
+station* initHalt(char *name)
 {
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
-	strcpy(stInit->name, "NULL");
+	strcpy(stInit->name, name);
 	stInit->id = 0;
 	stInit->prev = 0;
 	stInit->lengthSum = 0;
-	stInit->visited = -1;
+	stInit->visited = NOTVISITED;
 	
 	return stInit;
 }
@@ -187,14 +223,13 @@ void printHalt(station* halt)
 }
 
 
-path* initPath(char mark[10] , int length, char* st1)
+path* initPath(char *mark, int length)
 {
-	station* stat = (station*)malloc(sizeof(station));
-	strcpy(stat->name, st1);
 	path *p = (path*) malloc(sizeof(path));
 	p->length = length;
 	strcpy(p->mark, mark);
-	p->halt = stat;
+	p->halt = NULL;
+	p->next = NULL;
 	return p;	
 }
 
@@ -207,6 +242,11 @@ void displaypath(list **listRoot)
 		{
 			fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
 			counter++;
+			path *temp = listNode->p->next;
+			while(temp != NULL) {
+				fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
+				temp = temp->next;
+			}
 			listNode = listNode->next;
 		}
 		fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
