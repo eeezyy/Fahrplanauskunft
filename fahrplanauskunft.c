@@ -2,8 +2,6 @@
 #include "fahrplanauskunft.h"
 #include "heap.h"
 
-//hash-table in working progress
-
 
 int main(int argc, char *argv[]) 
 {
@@ -19,17 +17,18 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 	
-	/*readIn = argv[1];
-	j = load(readIn);
+	path* inputp = (path*)malloc(sizeof(path));
+	readIn = argv[1];
+	j = load(readIn, inputp);
 	SIZE = (long)(4 * j + 3);
-	fprintf(stdout, "SIZE: %ld", SIZE);
+	fprintf(stdout, "\n\nSIZE: %ld\n", SIZE);
 	path stationlist[SIZE];	//vertical - list
 	path* haltlist = stationlist;	//Pointer to Array-List(stationlist) <- horizontal
 	
 	//test = (int) makeHash(SIZE, readIn);
 	//fprintf(stdout, "Ergebnis von der Hash-Funktion: %d\n", test);
 
-	for(i = 0; i < SIZE; i++)
+/*	for(i = 0; i < SIZE; i++)
 	{
 		stationlist[i].length = 0;
 		strcpy(stationlist[i].mark,"NULL");
@@ -43,10 +42,12 @@ int main(int argc, char *argv[])
 		fprintf(stdout,"Länge: %d\tLinie: %s\n",stationlist[i].length, stationlist[i].mark);
 		// funktion, das 2te struct ausgegeben wird. 
 		
-	}	*/
+	}*/
+
 	heapnode **heap = (heapnode **)malloc(sizeof(heapnode *));
+
 	//heap = NULL;
-	fprintf(stdout, "heap-address: %i\n", (int)heap);
+/*	fprintf(stdout, "heap-address: %i\n", (int)heap);
 	station st1;
 	strcpy(st1.name,"Station1");
 	st1.lengthSum = 3;
@@ -128,7 +129,7 @@ int main(int argc, char *argv[])
 		if (out != NULL)
 			fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
 	} while(out != NULL);
-
+*/		displaypath(inputp);
 	return EXIT_SUCCESS;
 }
 
