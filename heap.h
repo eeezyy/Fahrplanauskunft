@@ -3,50 +3,56 @@
 // insert new node in heap
 heapnode *heapNodeInsert(heapnode **root, station *insert);
 // return the smallest node (station with minimal distance)
-station *heapNodeRemove(heapnode **root);
+station *heapNodeRemove(heapnode **heapAddress);
 // change the value of one node and rearrange the heap
 void heapNodeChange(heapnode **root, station *change, int newLength);
-heapnode *mergeHeaps(heapnode **S, heapnode *Q);
+// core function for heap, merges two heap trees, returns the root node
+// normaly used to add a node to heap tree
+heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
 
 heapnode *heapNodeInsert(heapnode **root, station *insert) {
 	heapnode *newNode = (heapnode *)malloc(sizeof(heapnode));
-	// initialize heapnode
+	// initialize new heapnode
 	newNode->halt = insert;
 	newNode->dist = 1;
 	newNode->left = NULL;
 	newNode->right = NULL;
 
+	/*
 	if(root == NULL)
 		fprintf(stdout, "%s\n", newNode->halt->name);
-	else
+	else {
 		if (*root != NULL) {
 			heapnode *temp = *root;
 			fprintf(stdout, "ROOT!=NULL, %s, %s\n", temp->halt->name, newNode->halt->name);
 		}
 		else
 			fprintf(stdout, "*ROOT == NULL\n");
+	} */
+
+	// add new node to heap
 	return mergeHeaps(root, newNode);
 }
 
-heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
+heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 	int D;
-	// M1
+	// initialize
 	heapnode *R = NULL;
 	heapnode *T;
 	heapnode *P;
-	if(S != NULL)
-		P = *S;
+	if(heapAddress != NULL)
+		P = *heapAddress;
 	else
 		P = NULL;
-	// M2
+	// merge trees
 	while(1) {
 		if(Q == NULL) {
-			fprintf(stdout, "Q == NULL\n");
+			//fprintf(stdout, "Q == NULL\n");
 			D = (P == NULL)? 1 : P->dist;
 			break;
 		}
 		if(P == NULL) {
-			fprintf(stdout, "P == NULL\n");
+			//fprintf(stdout, "P == NULL\n");
 			P = Q;
 			D = 0;
 			break;
@@ -65,14 +71,16 @@ heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 	}
 
 	while(1) {
-		// M3
+		// check if done
 		if(R == NULL) {
-			fprintf(stdout, "R == NULL\n");
-			fprintf(stdout, "heap-address %i\n", (int)S);
-			*S = P;
+			//fprintf(stdout, "R == NULL\n");
+			//fprintf(stdout, "heap-address %i\n", (int)heapAddress);
+
+			// write new root node to the heap address
+			*heapAddress = P;
 			return P;
 		}
-		// M4
+		// fix distances
 		Q = R->right;
 		if(R->left != NULL && R->left->dist < D) {
 			D = R->left->dist + 1;
@@ -88,20 +96,19 @@ heapnode *mergeHeaps(heapnode **S, heapnode *Q) {
 	}
 }
 
-station *heapNodeRemove(heapnode **S) {
+station *heapNodeRemove(heapnode **heapAddress) {
 	
-	if(*S != NULL) {
-		heapnode *root = *S;
+	if(*heapAddress != NULL) {
+		heapnode *root = *heapAddress;
 		heapnode *temp = root;
 		station *halt = root->halt;
-		fprintf(stdout, "before merge in remove\n");
-		//root = mergeHeaps(root->left, root->right);
-		*S = mergeHeaps(&(*S)->left, root->right);
-		fprintf(stdout, "after merge in remove\n");
+		//fprintf(stdout, "before merge in remove\n");
+		*heapAddress = mergeHeaps(&(*heapAddress)->left, root->right);
+		//fprintf(stdout, "after merge in remove\n");
 		free(temp);
 		return halt;
 	}
-	fprintf(stdout, "HeapNodeRemove NULL\n");
+	//fprintf(stdout, "HeapNodeRemove NULL\n");
 	return NULL;
 }
 
