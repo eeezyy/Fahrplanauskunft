@@ -144,7 +144,7 @@ int listClean(list **listRoot) {
 	while(temp != NULL) {
 		if(temp->p->next == NULL) {
 			prev->next = temp->next;
-			free(temp->p->halt);
+			//free(temp->p->halt);
 			free(temp->p);
 			free(temp);
 			temp = prev;
