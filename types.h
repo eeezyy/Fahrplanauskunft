@@ -24,3 +24,8 @@ typedef struct treenode {
 	struct treenode *left;
 	struct treenode *right;
 } heapnode;
+
+typedef struct liste {
+  path *p;
+  struct liste *next;
+} list;

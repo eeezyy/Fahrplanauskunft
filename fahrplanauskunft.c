@@ -20,14 +20,14 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 	
-	path* inputp = (path *)malloc(sizeof(path));
-	//inputp = NULL;
+	//path* inputp = (path *)malloc(sizeof(path));
+	list **listRoot = (list **)malloc(sizeof(list *));
 	readIn = argv[1];
-	j = load(readIn, inputp);
+	j = load(readIn, listRoot);
 	SIZE = (long)(4 * j + 3);
 	fprintf(stdout, "\n\nSIZE: %ld\n", SIZE);
-	path stationlist[SIZE];	//vertical - list
-	path* haltlist = stationlist;	//Pointer to Array-List(stationlist) <- horizontal
+	//path stationlist[SIZE];	//vertical - list
+	//path* haltlist = stationlist;	//Pointer to Array-List(stationlist) <- horizontal
 	
 	//test = (int) makeHash(SIZE, readIn);
 	//fprintf(stdout, "Ergebnis von der Hash-Funktion: %d\n", test);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		
 	}*/
 
-	displaypath(inputp);
+	displaypath(listRoot);
 
 	return EXIT_SUCCESS;
 }
