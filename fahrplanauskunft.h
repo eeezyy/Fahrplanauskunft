@@ -18,6 +18,7 @@ void printHalt(station *halt);
 path* initPath(char mark[10] , int length);
 void displaypath(list **listRoot);
 int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark);
+int listClean(list **listRoot);
 
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
@@ -114,6 +115,7 @@ int load(char *readIn, list **listRoot) {
 			}
 		}
 	}
+	listClean(listRoot);
 	return counter;
 }
 
@@ -133,6 +135,24 @@ int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestin
 		temp = temp->next;
 	}
 	return 0;
+}
+
+int listClean(list **listRoot) {
+	int counter = 0;
+	list *temp = *listRoot;
+	list *prev = NULL;
+	while(temp != NULL) {
+		if(temp->p->next == NULL) {
+			prev->next = temp->next;
+			//free(temp->p->halt);
+			free(temp->p);
+			free(temp);
+			temp = prev;
+		}
+		prev = temp;
+		temp = temp->next;
+	}
+	return counter;
 }
 
 char *trimTabsAndBlanks(char *string) {
@@ -183,30 +203,6 @@ char *trimTabsAndBlanks(char *string) {
 	return buffer;
 }
 
-long makeHash(long size, char *term)
-{
-	int i=0;
-	long hash = 0;
-	int termlength = 0;
-	long double factor;
-
-
-	if (strlen(term)==0)
-		return -1;
-		
-	termlength=strlen(term);	//bezeichnet die Stringlänge n
-		
-	factor=31;			
-	factor= pow(factor,termlength); //wird für die for-Schleife verwendet
-
-	for (i=0; i < termlength; i++)
-	{
-		factor = (factor/31);
-		hash=(int)(hash + term[i]*factor)%size;
-	}
-	return hash;
-}
-
 station* initHalt(char *name)
 {
 	station* stInit;
@@ -238,20 +234,20 @@ path* initPath(char *mark, int length)
 
 void displaypath(list **listRoot)
 {
-		list *listNode = *listRoot;
-		int counter = 0;
-		fprintf(stdout,"read-process launched\n");
-		while(listNode != NULL)
-		{
-			fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
-			counter++;
-			path *temp = listNode->p->next;
-			while(temp != NULL) {
-				fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
-				temp = temp->next;
-			}
-			listNode = listNode->next;
+	list *listNode = *listRoot;
+	int counter = 0;
+	fprintf(stdout,"read-process launched\n");
+	while(listNode != NULL)
+	{
+		fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
+		counter++;
+		path *temp = listNode->p->next;
+		while(temp != NULL) {
+			fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
+			temp = temp->next;
 		}
-		fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
+		listNode = listNode->next;
+	}
+	fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
 }
 
