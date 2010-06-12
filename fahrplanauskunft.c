@@ -5,6 +5,9 @@
 
 int main(int argc, char *argv[]) 
 {
+	// addresses to heap-root for both threads
+	heapnode **heapBeginn = (heapnode **)malloc(sizeof(heapnode *));
+	heapnode **heapEnd = (heapnode **)malloc(sizeof(heapnode *));
 	char* readIn = NULL;
 	int i, j = 0;
 	
@@ -44,92 +47,8 @@ int main(int argc, char *argv[])
 		
 	}*/
 
-	heapnode **heap = (heapnode **)malloc(sizeof(heapnode *));
+	displaypath(inputp);
 
-	//heap = NULL;
-/*	fprintf(stdout, "heap-address: %i\n", (int)heap);
-	station st1;
-	strcpy(st1.name,"Station1");
-	st1.lengthSum = 3;
-
-	station st2;
-	strcpy(st2.name,"Station2");
-	st2.lengthSum = 7;
-
-	station st3;
-	strcpy(st3.name,"Station3");
-	st3.lengthSum = 15;
-
-	station st4;
-	strcpy(st4.name,"Station4");
-	st4.lengthSum = 6;
-
-	station st5;
-	strcpy(st5.name,"Station5");
-	st5.lengthSum = 5;
-
-	heapnode *temp;
-
-	heapNodeInsert(heap, &st1);
-	if (heap!=NULL) {
-	temp = *heap;
-	if(temp != NULL){
-		fprintf(stdout, "1. %s\n", temp->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "1. left %s\n", temp->left->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "1. right %s\n", temp->right->halt->name);
-	}}
-	heapNodeInsert(heap, &st2);
-	if (heap!=NULL) {
-	temp = *heap;
-	if(temp != NULL){
-		fprintf(stdout, "2. %s\n", temp->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "2. left %s\n", temp->left->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "2. right %s\n", temp->right->halt->name);
-	}}
-	heapNodeInsert(heap, &st3);
-	if (heap!=NULL) {
-	temp = *heap;
-	if(temp != NULL){
-		fprintf(stdout, "3. %s\n", temp->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "3. left %s\n", temp->left->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "3. right %s\n", temp->right->halt->name);
-	}}
-	heapNodeInsert(heap, &st4);
-	if (heap!=NULL) {
-	temp = *heap;
-	if(temp != NULL){
-		fprintf(stdout, "4. %s\n", temp->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "4. left %s\n", temp->left->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "4. right %s\n", temp->right->halt->name);
-	}}
-	heapNodeInsert(heap, &st5);
-	if (heap!=NULL) {
-	temp = *heap;
-	if(temp != NULL){
-		fprintf(stdout, "5. %s\n", temp->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "5. left %s\n", temp->left->halt->name);
-		if(temp->left != NULL)
-			fprintf(stdout, "5. right %s\n", temp->right->halt->name);
-	}}
-
-	station *out = NULL;
-	
-	//out = heapNodeRemove(heap);
-	do {
-		out = heapNodeRemove(heap);
-		if (out != NULL)
-			fprintf(stdout, "%s(%i)\n", out->name, out->lengthSum);
-	} while(out != NULL);
-*/		displaypath(inputp);
 	return EXIT_SUCCESS;
 }
 
