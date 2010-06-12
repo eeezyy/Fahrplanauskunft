@@ -109,6 +109,9 @@ int load(char *readIn, list **listRoot) {
 				station0 = station1;
 				station1 = station2;
 			} while (token != NULL);
+			if (station0 != NULL && station1 != NULL) {
+				adjazenzInsert(listRoot, station1, station0, length, mark);
+			}
 		}
 	}
 	return counter;
@@ -117,7 +120,7 @@ int load(char *readIn, list **listRoot) {
 int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark) {
 	list *temp = *listRoot;
 	while(temp != NULL) {
-		if(temp->p->halt==stationFrom) {
+		if(strcmp(temp->p->halt->name,stationFrom->name) == 0) {
 			path *pathNode = NULL;
 			if(temp->p->next != NULL) {
 				pathNode = temp->p->next;
