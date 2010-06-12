@@ -13,7 +13,7 @@ char *programname;
 int load(char *readIn, list **listRoot);
 char *trimTabsAndBlanks(char *string);
 long makeHash(long size, char* term);
-station* initHalt(char *halt);
+station* initHalt(char *halt, list **listRoot);
 void printHalt(station *halt);
 path* initPath(char mark[10] , int length);
 void displaypath(list **listRoot);
@@ -72,7 +72,7 @@ int load(char *readIn, list **listRoot) {
 					lastListNode = *listRoot;
 				}
 				lastListNode->p = initPath(mark, 0);
-				station1 = initHalt(halt1);
+				station1 = initHalt(halt1, listRoot);
 				lastListNode->p->halt = station1;
 				counter++;
 			} else {
@@ -98,7 +98,7 @@ int load(char *readIn, list **listRoot) {
 				lastListNode->next = (list *)malloc(sizeof(list));
 				lastListNode = lastListNode->next;
 				lastListNode->p = initPath(mark, 0);
-				station2 = initHalt(halt2);
+				station2 = initHalt(halt2, listRoot);
 				lastListNode->p->halt = station2;
 
 				// put into adjazenzlist
@@ -144,7 +144,7 @@ int listClean(list **listRoot) {
 	while(temp != NULL) {
 		if(temp->p->next == NULL) {
 			prev->next = temp->next;
-			//free(temp->p->halt);
+			free(temp->p->halt);
 			free(temp->p);
 			free(temp);
 			temp = prev;
@@ -203,8 +203,16 @@ char *trimTabsAndBlanks(char *string) {
 	return buffer;
 }
 
-station* initHalt(char *name)
-{
+station* initHalt(char *name, list **listRoot) {
+	list *temp = *listRoot;
+	while(temp != NULL) {
+		if(temp->p->halt != NULL) {
+			if(strcmp(temp->p->halt->name,name) == 0) {
+				return temp->p->halt;
+			}
+		}
+		temp = temp->next;
+	}
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
 	strcpy(stInit->name, name);
