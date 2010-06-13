@@ -152,9 +152,10 @@ heapnode **recursiveHeapSearch(heapnode **root, heapnode **node, station *findSt
 			(*node)->right = NULL;
 		}
 		fprintf(stdout, "3.\n");
-		*node = NULL;
 		mergeHeaps(root, (*isFound)->left);
+		fprintf(stdout, "3.\n");
 		mergeHeaps(root, (*isFound)->right);
+		*node = NULL;
 		free(*node);
 		heapNodeInsert(root, findStation);
 		isFound = NULL;

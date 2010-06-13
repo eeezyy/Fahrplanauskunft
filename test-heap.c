@@ -78,6 +78,7 @@ int test4() {
 int test5() {
 	heapnode **heap1 = (heapnode **)malloc(sizeof(heapnode *));
 	//*heap1 = (heapnode *)malloc(sizeof(heapnode));
+	//*heap1 = NULL;
 	station *st1 = (station *)malloc(sizeof(station));
 	strcpy(st1->name,"Node1");
 	st1->lengthSum = 5;
@@ -90,7 +91,7 @@ int test5() {
 	heapNodeInsert(heap1, st1);
 	heapNodeInsert(heap1, st2);
 	heapNodeInsert(heap1, st3);
-	heapNodeChange(heap1, st3, 5);
+	//heapNodeChange(heap1, st2, 4);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
