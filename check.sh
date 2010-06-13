@@ -43,4 +43,5 @@ checkTest "${ETC1}" $EXIT_FAILURE "Test with wrong format in file: ${ETC1}"
 #SUCCESS
 checkTest "${EMPTYFILE}" $EXIT_SUCCESS "Test with empty file"
 checkTest "${EXAMPLEFILE}" $EXIT_SUCCESS "Test with example file"
+checkTest "test1.txt" $EXIT_SUCCESS "Test with one line without newLine at the end"
 

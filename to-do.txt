@@ -46,5 +46,6 @@
 		2. Farbliche Markierung der Liniennamen
 		3. schwächere Linie für restliches Netz
 	6. GEO-Daten von Stationen sammeln/suchen und in XML aufbereiten
+		1. http://www.stadtplan-wien.com/stations.xml
 	7. Oberfläche über AJAX/jQuery
 	8. Evtl. Eingabe-/Bearbeitungs-Maske für Verbindungsliste

@@ -4,13 +4,16 @@ CFLAGS=-g -Wall -O -lm
 PROGRAM=fahrplanauskunft
 CHECKSCRIPT=check.sh
 
-all: ${PROGRAM}
+all: ${PROGRAM} test-heap
 
 ${PROGRAM}: ${PROGRAM}.o
 	gcc ${CFLAGS} -o ${PROGRAM} ${PROGRAM}.o
 
 ${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h types.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
+
+test-heap: test-heap.c heap.h
+	gcc ${CFLAGS} -o test-heap test-heap.c
 	
 check: ${CHECKSCRIPT} ${PROGRAM}
 	./${CHECKSCRIPT} ${PROGRAM}
