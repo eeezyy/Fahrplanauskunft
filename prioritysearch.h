@@ -13,9 +13,11 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			heapNodeInsert(heap, tempPath->halt);
 			tempPath = tempPath->next;
 		}
-		tempStation = currentStation;
 		if(currentStation != tempStation)
 			currentStation->prev = tempStation;
+
+		tempStation = currentStation;
+
 		if(currentStation->visited != VISITED_BEGINN) {
 			tempPath = currentStation->p;
 			if(tempPath != NULL && tempPath->halt != NULL)
