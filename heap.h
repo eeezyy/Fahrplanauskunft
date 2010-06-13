@@ -129,6 +129,53 @@ heapnode **recursiveHeapSearch(heapnode **root, heapnode **node, station *findSt
 		}
 	} else {
 		if((*node)->halt == findStation) {
+			//(*node)->halt->lengthSum = newLength;
+			findStation->lengthSum = newLength;
+			//heapnode *temp = node;
+			//node = mergeHeaps(&node->left, node->right);
+			//free(temp);
+			//return node;
+			//isFound = node;
+			return node;
+		} else {
+			return NULL;
+		}
+	}
+	if(isFound != NULL) {
+		fprintf(stdout, "isFOUND != NULL\n");
+		if(&(*node)->left == isFound){
+		fprintf(stdout, "1.\n");
+			(*node)->left = NULL;
+		}
+		else if(&(*node)->right == isFound){
+		fprintf(stdout, "2.\n");
+			(*node)->right = NULL;
+		}
+		fprintf(stdout, "3.\n");
+		*node = NULL;
+		mergeHeaps(root, (*isFound)->left);
+		mergeHeaps(root, (*isFound)->right);
+		free(*node);
+		heapNodeInsert(root, findStation);
+		isFound = NULL;
+	}
+	return NULL;
+}
+
+heapnode **recursiveHeapSearch2(heapnode **root, heapnode **node, station *findStation, int newLength) {
+	heapnode **isFound = NULL;
+	if(node == NULL) {
+		return NULL;
+	}
+	if ((*node)->halt->lengthSum < findStation->lengthSum) {
+		if((*node)->left != NULL) {
+			isFound = recursiveHeapSearch(root, &(*node)->left, findStation, newLength);
+		}
+		if((*node)->right != NULL && !isFound) {
+			isFound = recursiveHeapSearch(root, &(*node)->right, findStation, newLength);
+		}
+	} else {
+		if((*node)->halt == findStation) {
 			(*node)->halt->lengthSum = newLength;
 			//heapnode *temp = node;
 			//node = mergeHeaps(&node->left, node->right);
@@ -151,19 +198,18 @@ heapnode **recursiveHeapSearch(heapnode **root, heapnode **node, station *findSt
 			(*node)->right = NULL;
 		}
 		fprintf(stdout, "3.\n");
-		//*node = NULL;
+		*node = NULL;
 		mergeHeaps(root, (*isFound)->left);
 		mergeHeaps(root, (*isFound)->right);
-		//free(*node);
+		free(*node);
 		heapNodeInsert(root, findStation);
+		isFound = NULL;
 	}
 	return NULL;
 }
 
 heapnode **heapNodeChange(heapnode **root, station *change, int newLength) {
-	//change->lengthSum = newLength;
-	//heapNodeInsert(root, change);
-	//heapnode *temp = *root;
+	heapnode *temp = *root;
 	return recursiveHeapSearch(root, root, change, newLength);
 }
 
