@@ -287,10 +287,7 @@ station *searchHalt(char* halt, list **listRoot)
 		{
 			if((strcmp(elem->p->halt->name,halt) == 0))
 			{
-				if (strcmp(elem->p->halt->name,halt) == 0)
-				{
-					return elem->p->halt;
-				}
+				return elem->p->halt;
 			}
 		}
 		elem = elem->next;

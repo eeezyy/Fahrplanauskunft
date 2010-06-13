@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 		}
 	}
-	
+	printStations(endStation);
 				
 	return EXIT_SUCCESS;
 }

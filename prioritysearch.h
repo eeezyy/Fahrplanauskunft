@@ -17,6 +17,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 		}
 		currentStation = heapNodeRemove(heap);
 		currentStation->prev = startStation;
+		fprintf(stdout, "%s\n", currentStation->name);
 		if(tempPath->halt == endStation) {
 			fprintf(stdout, "endStation 2.\n");
 			return;
@@ -24,3 +25,11 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 	}
 }
 
+void printStations(station *endStation){
+	if(endStation != NULL) {
+		if(endStation->prev != NULL) {
+			printStations(endStation);
+		}
+	}
+	fprintf(stdout, "%s\n", endStation->name);
+}

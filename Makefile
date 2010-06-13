@@ -9,7 +9,7 @@ all: ${PROGRAM} test-heap
 ${PROGRAM}: ${PROGRAM}.o
 	gcc ${CFLAGS} -o ${PROGRAM} ${PROGRAM}.o
 
-${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h types.h
+${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h types.h prioritysearch.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
 
 test-heap: test-heap.c heap.h
