@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	// addresses to heap-root for both threads
 	heapnode **heapBeginn = (heapnode **)malloc(sizeof(heapnode *));
-	*heapBeginn = (heapnode *)malloc(sizeof(heapnode));
+	//*heapBeginn = (heapnode *)malloc(sizeof(heapnode));
 	//heapnode **heapEnd = (heapnode **)malloc(sizeof(heapnode *));
 	//*heapEnd = (heapnode *)malloc(sizeof(heapnode));
 
