@@ -51,8 +51,8 @@ int load(char *readIn, list **listRoot) {
 			mark = token;
 
 			station *station0 = NULL;
-			station *station1;
-			station *station2;
+			station *station1 = NULL;
+			station *station2 = NULL;
 
 			// unimportant characters
 			strtok(NULL, "\"");
@@ -84,14 +84,16 @@ int load(char *readIn, list **listRoot) {
 					break;
 				}
 				length = (int)strtol(token, NULL, 10);
-				
 				// parse following station
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
 				if(token != NULL) {
 					halt2 = token;
 					counter++;
-				} else break;
-
+				} else {
+					fprintf(stderr, "wrong syntax\n");
+					exit(EXIT_FAILURE);
+					//break;
+				}
 				// save station in temporary list, to move later to hashtable
 				lastListNode->next = (list *)malloc(sizeof(list));
 				lastListNode = lastListNode->next;
@@ -141,7 +143,16 @@ int listClean(list **listRoot) {
 	list *prev = NULL;
 	while(temp != NULL) {
 		if(temp->p->next == NULL) {
-			prev->next = temp->next;
+			if(prev != NULL) {
+				prev->next = temp->next;
+			} else {
+				*listRoot = temp;
+				if(temp->next == NULL) {
+					break;
+				} else {
+					prev = temp->next;
+				}
+			}
 			free(temp->p);
 			free(temp);
 			temp = prev;
@@ -240,6 +251,8 @@ void displaypath(list **listRoot)
 	fprintf(stdout,"read-process launched\n");
 	while(listNode != NULL)
 	{
+		if(listNode->p == NULL)
+							fprintf(stderr, "test\n");
 		fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
 		counter++;
 		path *temp = listNode->p->next;

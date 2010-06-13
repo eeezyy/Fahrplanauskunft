@@ -34,6 +34,7 @@
 	3. Testdateien
 	4. Protokoll, Doku
 	5. Installations- und Bedieungsanleitung
+		1. chmod +x check.sh
 19. Aktuelle Ubahn-Verbindung
 20. Webinterface
 	1. Verwendung von PHP
