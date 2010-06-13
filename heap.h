@@ -5,7 +5,7 @@ heapnode *heapNodeInsert(heapnode **root, station *insert);
 // return the smallest node (station with minimal distance)
 station *heapNodeRemove(heapnode **heapAddress);
 // change the value of one node and rearrange the heap
-heapnode *heapNodeChange(heapnode **root, station *change, int newLength);
+heapnode **heapNodeChange(heapnode **root, station *change, int newLength);
 // core function for heap, merges two heap trees, returns the root node
 // normaly used to add a node to heap tree
 heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
@@ -115,24 +115,26 @@ station *heapNodeRemove(heapnode **heapAddress) {
 	return NULL;
 }
 
-heapnode *recursiveHeapSearch(heapnode **root, heapnode *node, station *findStation, int newLength) {
-	heapnode *isFound = NULL;
+heapnode **recursiveHeapSearch(heapnode **root, heapnode **node, station *findStation, int newLength) {
+	heapnode **isFound = NULL;
 	if(node == NULL) {
 		return NULL;
 	}
-	if (node->halt->lengthSum < findStation->lengthSum) {
-		if(node->left != NULL) {
-			isFound = recursiveHeapSearch(root, node->left, findStation, newLength);
+	if ((*node)->halt->lengthSum < findStation->lengthSum) {
+		if((*node)->left != NULL) {
+			isFound = recursiveHeapSearch(root, &(*node)->left, findStation, newLength);
 		}
-		if(node->right != NULL && !isFound) {
-			isFound = recursiveHeapSearch(root, node->right, findStation, newLength);
+		if((*node)->right != NULL && !isFound) {
+			isFound = recursiveHeapSearch(root, &(*node)->right, findStation, newLength);
 		}
 	} else {
-		if(node->halt == findStation) {
-			node->halt->lengthSum = newLength;
+		if((*node)->halt == findStation) {
+			(*node)->halt->lengthSum = newLength;
 			//heapnode *temp = node;
 			//node = mergeHeaps(&node->left, node->right);
 			//free(temp);
+			//return node;
+			//isFound = node;
 			return node;
 		} else {
 			return NULL;
@@ -140,26 +142,27 @@ heapnode *recursiveHeapSearch(heapnode **root, heapnode *node, station *findStat
 	}
 	if(isFound != NULL) {
 		fprintf(stdout, "isFOUND != NULL\n");
-		//heapNodeRemove(&isFound);
-		heapnode *temp = isFound;
-		if(node->left == isFound){
-			node->left = NULL;
+		heapnode **temp = isFound;
+		if(&(*node)->left == isFound){
+			(*node)->left = NULL;
 		}
-		else if(node->right == isFound){
-			node->right = NULL;
+		else if(&(*node)->right == isFound){
+			(*node)->right = NULL;
 		}
-		mergeHeaps(root, isFound->left);
-		mergeHeaps(root, isFound->right);
+		mergeHeaps(root, (*isFound)->left);
+		mergeHeaps(root, (*isFound)->right);
+		//(*isFound) = NULL;
+		free(*isFound);
 		heapNodeInsert(root, findStation);
 	}
 	return NULL;
 }
 
-heapnode *heapNodeChange(heapnode **root, station *change, int newLength) {
+heapnode **heapNodeChange(heapnode **root, station *change, int newLength) {
 	change->lengthSum = newLength;
 	heapNodeInsert(root, change);
-	heapnode *temp = *root;
-	return recursiveHeapSearch(root, temp, change, newLength);
+	//heapnode *temp = *root;
+	return recursiveHeapSearch(root, root, change, newLength);
 }
 
 
