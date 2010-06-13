@@ -7,9 +7,9 @@
 #define VISITED_BEGINN 1
 #define VISITED_END 2
 #define BUFFERSIZE 501
-long SIZE = 0;
 
 char *programname;
+
 int load(char *readIn, list **listRoot);
 char *trimTabsAndBlanks(char *string);
 station* initHalt(char *halt, list **listRoot);

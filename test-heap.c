@@ -73,5 +73,6 @@ int main() {
 	if(!test1()) fprintf(stdout, "test1\n");
 	if(!test2()) fprintf(stdout, "test2\n");
 	if(!test3()) fprintf(stdout, "test3\n");
+	if(!test4()) fprintf(stdout, "test4\n");
 }
 
