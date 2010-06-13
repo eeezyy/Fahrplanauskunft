@@ -13,7 +13,7 @@ char *programname;
 int load(char *readIn, list **listRoot);
 char *trimTabsAndBlanks(char *string);
 station* initHalt(char *halt, list **listRoot);
-path* initPath(char mark[10] , int length);
+path* initPath(char *mark, int length);
 void displaypath(list **listRoot);
 int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark);
 int listClean(list **listRoot);
