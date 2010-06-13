@@ -129,7 +129,7 @@ int recursiveHeapSearch(heapnode **root, heapnode *node, station *findStation, i
 	} else {
 		if(node->halt == findStation) {
 			node->halt->lengthSum = newLength;
-			//heapNodeRemove(&node);
+			heapNodeRemove(&node);
 			//free(node);
 			return 1;
 		} else {
