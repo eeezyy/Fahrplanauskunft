@@ -134,25 +134,27 @@ heapnode **recursiveHeapSearch(heapnode **root, heapnode **node, station *findSt
 			//node = mergeHeaps(&node->left, node->right);
 			//free(temp);
 			//return node;
-			//isFound = node;
-			return node;
+			isFound = node;
+			//return node;
 		} else {
 			return NULL;
 		}
 	}
-	if(isFound != NULL) {
+	if(*isFound != NULL) {
 		fprintf(stdout, "isFOUND != NULL\n");
-		heapnode **temp = isFound;
-		if(&(*node)->left == isFound){
+		/*if((*node)->left == *isFound){
+		fprintf(stdout, "1.\n");
 			(*node)->left = NULL;
 		}
-		else if(&(*node)->right == isFound){
+		else if((*node)->right == *isFound){
+		fprintf(stdout, "2.\n");
 			(*node)->right = NULL;
-		}
+		}*/
+		fprintf(stdout, "3.\n");
+		*node = NULL;
 		mergeHeaps(root, (*isFound)->left);
 		mergeHeaps(root, (*isFound)->right);
-		//(*isFound) = NULL;
-		free(*isFound);
+		free(*node);
 		heapNodeInsert(root, findStation);
 	}
 	return NULL;
