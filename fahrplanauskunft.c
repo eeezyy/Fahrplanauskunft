@@ -23,7 +23,9 @@ int main(int argc, char *argv[])
 	int count = load(readIn, listRoot);
 
 	displaypath(listRoot);
-
+	defineSD(listRoot);
+	
+				
 	return EXIT_SUCCESS;
 }
 

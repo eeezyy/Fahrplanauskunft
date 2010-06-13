@@ -17,7 +17,9 @@ path* initPath(char *mark, int length);
 void displaypath(list **listRoot);
 int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark);
 int listClean(list **listRoot);
-
+void displaypath(list **listRoot);
+void chomp(char *str);
+int searchHalt(char* halt1, char* halt2, list **listRoot);
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
 
@@ -248,16 +250,16 @@ void displaypath(list **listRoot)
 {
 	list *listNode = *listRoot;
 	int counter = 0;
-	fprintf(stdout,"read-process launched\n");
+//	fprintf(stdout,"read-process launched\n");
 	while(listNode != NULL)
 	{
-		if(listNode->p == NULL)
-							fprintf(stderr, "test\n");
-		fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
+		//if(listNode->p == NULL)
+						//fprintf(stderr, "test\n");
+	//fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
 		counter++;
 		path *temp = listNode->p->next;
 		while(temp != NULL) {
-			fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
+	//	fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
 			temp = temp->next;
 		}
 		listNode = listNode->next;
@@ -265,3 +267,68 @@ void displaypath(list **listRoot)
 	fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
 }
 
+void defineSD(list **listRoot)
+{
+	//buffer for defining source and destination halt
+	char source[40];
+	char destination[40];
+	
+	fprintf(stdout, "\nBitte die Station, welche als Anfangspunkt für die Route gilt, eingeben:\n");
+	fgets(source, 25,stdin);
+	chomp(source);
+	fprintf(stdout, "\nBitte Zielstation eingeben:\n");
+	fgets(destination, 25,stdin);
+	chomp(destination);
+	//fprintf(stdout, "\n%s\t %s\n", source, destination);
+	if(strcmp(source, destination) == 0)
+	{
+		fprintf(stdout, "Sie befinden sich bereits an der eingegebenen Station.\n");
+	}
+	else
+	{
+		searchHalt(source, destination,listRoot);
+	}
+}
+
+void chomp(char *str)
+{
+   size_t p=strlen(str);
+   /* '\n' mit '\0' überschreiben */
+   if(str[p-1] == '\n')
+   {
+	str[p-1]='\0';
+   }
+}
+
+int searchHalt(char* halt1, char* halt2, list **listRoot)
+{
+	list *elem = *listRoot;
+	int ok = 0;
+	while(elem != NULL)
+	{
+		if(elem->p->halt != NULL) 
+		{
+			if((strcmp(elem->p->halt->name,halt1) == 0) || (strcmp(elem->p->halt->name,halt2) == 0))
+			{
+				if (strcmp(elem->p->halt->name,halt1) == 0)
+				{
+					fprintf(stdout, "Station1 verfuegbar!\n");
+					ok ++;
+				}
+				if (strcmp(elem->p->halt->name,halt2) == 0)
+				{
+					fprintf(stdout, "Station2 verfuegbar!\n");
+					ok ++;
+				}
+				if( ok == 2)
+				{
+					fprintf(stdout,"Beide Stationen gefunden!\n");
+					return 0;
+				}
+			}
+		}
+		elem = elem->next;
+	}
+		fprintf(stdout, "Stationen nicht gefunden!\n");
+		return 1;
+}
