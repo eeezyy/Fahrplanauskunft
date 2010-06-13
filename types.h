@@ -1,15 +1,14 @@
-// EINLESE-STRUCT
-typedef struct node
-{
+struct edge;
+
+typedef struct node {
 	char name[50];
-	int id;
+	struct edge *p;
 	int prev;
 	int lengthSum;
 	int visited;
 } station;
 
-typedef struct edge
-{
+typedef struct edge {
 	station *halt;
 	int length;
 	char mark[10];
@@ -26,6 +25,6 @@ typedef struct treenode {
 } heapnode;
 
 typedef struct liste {
-  path *p;
-  struct liste *next;
+	path *p;
+	struct liste *next;
 } list;

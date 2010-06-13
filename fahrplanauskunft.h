@@ -12,9 +12,7 @@ long SIZE = 0;
 char *programname;
 int load(char *readIn, list **listRoot);
 char *trimTabsAndBlanks(char *string);
-long makeHash(long size, char* term);
 station* initHalt(char *halt, list **listRoot);
-void printHalt(station *halt);
 path* initPath(char mark[10] , int length);
 void displaypath(list **listRoot);
 int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestination, int length, char *mark);
@@ -144,10 +142,11 @@ int listClean(list **listRoot) {
 	while(temp != NULL) {
 		if(temp->p->next == NULL) {
 			prev->next = temp->next;
-			//free(temp->p->halt);
 			free(temp->p);
 			free(temp);
 			temp = prev;
+		} else {
+			temp->p->halt->p = temp->p;
 		}
 		prev = temp;
 		temp = temp->next;
@@ -216,19 +215,13 @@ station* initHalt(char *name, list **listRoot) {
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
 	strcpy(stInit->name, name);
-	stInit->id = 0;
+	stInit->p = NULL;
 	stInit->prev = 0;
 	stInit->lengthSum = 0;
 	stInit->visited = NOTVISITED;
 	
 	return stInit;
 }
-
-void printHalt(station* halt)
-{
-	fprintf(stdout,"stationname: %s\tID: %d\tPREV: %d\tSumme: %d\tvisited: %d ", halt->name, halt->id, halt->prev, halt->lengthSum, halt->visited);
-}
-
 
 path* initPath(char *mark, int length)
 {
