@@ -1,0 +1,49 @@
+ 1. Input for StartStation, ZielStation
+ 2. heapNodeChange implementieren
+ 3. Priority Search First Algorithmus Implementation
+	3.1. Liste nach StartStation durchsuchen
+	3.2. Abstand zu jeder folgenden Station berechnen und in 
+	     Station->lengthSum eintragen. Station in heap hinzufügen
+	3.3. Station von heap erhalten (removeHeapNode) (station mit kleinster distanz).
+	3.4. Previous Station eintragen, wenn nicht erste Station.
+	     Mit aktueller Station im Punkt 1.2. fortsetzen.
+	(Falls Station lengthSum = -1, ist Station normal nicht im heap, da
+	 auch noch nicht angesprungen! Wenn aber eine Station angesprungen wird,
+	 die schon eine lengthSum enthält und mit dem neuen Weg kürzer wird,
+	 muss heap neu sortiert werden (heapNodeChange).)
+	(Evtl. im heap auf '-1' überprüfen.)
+ 4. Umstieg mit einberechnen.
+ 5. Ausgabe der Fahrtdauer mit jeder Station und der Linie.
+ 6. Testfälle
+ 7. Ringlinie testen, evtl. anpassen
+	1. von welcher Richtung wurde gefahren
+	2. lengthSum vergleichen
+ 8. Thread-Implementation
+ 9. Testfälle
+10. Ergebnis beider Threads zusammenführen mit Ausgabe.
+11. Vergleich des Algorithmus ohne und mit Thread.
+12. Implementation in C++ mit Algorithmus von Bibliothek
+13. Testfälle
+14. Zusätzlicher Vergleich vom Bibliotheks-Algorithmus.
+15. Kommentare wenn noch nicht vorhanden.
+16. Installations- und Bedienungsanleitung.
+17. Doku mit Beschreibung des implementierten Algorithmus + Testprotokoll
+18. Komplettes tar
+	1. Ausführbares Programm
+	2. Quellcode + Header
+	3. Testdateien
+	4. Protokoll, Doku
+	5. Installations- und Bedieungsanleitung
+19. Aktuelle Ubahn-Verbindung
+20. Webinterface
+	1. Verwendung von PHP
+	2. Programmaufruf mit exec
+	3. Programmstartbefehl: echo -e "Startstation\nEndstation\n" | ./fahrplanauskunft ubahn.txt
+	4. Programmausgabe parsen
+	5. Google Maps als Anzeige
+		1. Verbinden der Linien
+		2. Farbliche Markierung der Liniennamen
+		3. schwächere Linie für restliches Netz
+	6. GEO-Daten von Stationen sammeln/suchen und in XML aufbereiten
+	7. Oberfläche über AJAX/jQuery
+	8. Evtl. Eingabe-/Bearbeitungs-Maske für Verbindungsliste
