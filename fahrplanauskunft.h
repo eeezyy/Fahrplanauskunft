@@ -19,7 +19,7 @@ int adjazenzInsert(list **listRoot, station *stationFrom, station *stationDestin
 int listClean(list **listRoot);
 void displaypath(list **listRoot);
 void chomp(char *str);
-int searchHalt(char* halt1, char* halt2, list **listRoot);
+station *searchHalt(char* halt, list **listRoot);
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
 
@@ -267,29 +267,6 @@ void displaypath(list **listRoot)
 	fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
 }
 
-void defineSD(list **listRoot)
-{
-	//buffer for defining source and destination halt
-	char source[40];
-	char destination[40];
-	
-	fprintf(stdout, "\nBitte die Station, welche als Anfangspunkt für die Route gilt, eingeben:\n");
-	fgets(source, 25,stdin);
-	chomp(source);
-	fprintf(stdout, "\nBitte Zielstation eingeben:\n");
-	fgets(destination, 25,stdin);
-	chomp(destination);
-	//fprintf(stdout, "\n%s\t %s\n", source, destination);
-	if(strcmp(source, destination) == 0)
-	{
-		fprintf(stdout, "Sie befinden sich bereits an der eingegebenen Station.\n");
-	}
-	else
-	{
-		searchHalt(source, destination,listRoot);
-	}
-}
-
 void chomp(char *str)
 {
    size_t p=strlen(str);
@@ -300,7 +277,7 @@ void chomp(char *str)
    }
 }
 
-int searchHalt(char* halt1, char* halt2, list **listRoot)
+station *searchHalt(char* halt, list **listRoot)
 {
 	list *elem = *listRoot;
 	int ok = 0;
@@ -308,27 +285,15 @@ int searchHalt(char* halt1, char* halt2, list **listRoot)
 	{
 		if(elem->p->halt != NULL) 
 		{
-			if((strcmp(elem->p->halt->name,halt1) == 0) || (strcmp(elem->p->halt->name,halt2) == 0))
+			if((strcmp(elem->p->halt->name,halt) == 0))
 			{
-				if (strcmp(elem->p->halt->name,halt1) == 0)
+				if (strcmp(elem->p->halt->name,halt) == 0)
 				{
-					fprintf(stdout, "Station1 verfuegbar!\n");
-					ok ++;
-				}
-				if (strcmp(elem->p->halt->name,halt2) == 0)
-				{
-					fprintf(stdout, "Station2 verfuegbar!\n");
-					ok ++;
-				}
-				if( ok == 2)
-				{
-					fprintf(stdout,"Beide Stationen gefunden!\n");
-					return 0;
+					return elem->p->halt;
 				}
 			}
 		}
 		elem = elem->next;
 	}
-		fprintf(stdout, "Stationen nicht gefunden!\n");
-		return 1;
+	return NULL;
 }

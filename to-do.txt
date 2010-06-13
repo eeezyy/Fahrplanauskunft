@@ -5,7 +5,7 @@
 	3.2. Abstand zu jeder folgenden Station berechnen und in 
 	     Station->lengthSum eintragen. Station in heap hinzufügen
 	3.3. Station von heap erhalten (removeHeapNode) (station mit kleinster distanz).
-	3.4. Previous Station eintragen, wenn nicht erste Station.
+	3.4. Previous Station eintragen.
 	     Mit aktueller Station im Punkt 1.2. fortsetzen.
 	(Falls Station lengthSum = -1, ist Station normal nicht im heap, da
 	 auch noch nicht angesprungen! Wenn aber eine Station angesprungen wird,

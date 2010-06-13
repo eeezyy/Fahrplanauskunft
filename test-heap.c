@@ -95,7 +95,7 @@ int test5() {
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
-	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
+	//fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	/*if(heapNodeRemove(heap1)->lengthSum!=3) return 0;
 	if(heapNodeRemove(heap1)->lengthSum!=5) return 0;
 	if(heapNodeRemove(heap1)->lengthSum!=5) return 0;*/
