@@ -77,7 +77,7 @@ int test4() {
 // checkin remove
 int test5() {
 	heapnode **heap1 = (heapnode **)malloc(sizeof(heapnode *));
-	*heap1 = NULL;
+	*heap1 = (heapnode *)malloc(sizeof(heapnode));
 	station *st1 = (station *)malloc(sizeof(station));
 	strcpy(st1->name,"Node1");
 	st1->lengthSum = 5;
