@@ -1,10 +1,12 @@
 <?php
-	echo "PHP-Test in SVN";
-	$command  = "echo -e "Startstation\nEndstation\n" | ./fahrplanauskunft ubahn.txt"
-	$output = new array();
+	echo "PHP-Test in SVN<br />\n";
+	$command  = "echo -e \"Startstation\\nEndstation\\n\" | ./fahrplanauskunft ubahn.txt";
+	$output = array();
 	$return_val;
 	$result = exec ($command, $output, $return_var);
-	echo "result: ".$result;
-	printv($output);
+	echo "result: ".$result."<br />\n";
+	foreach($output as $line) {
+		echo $line."<br />\n";
+	}
 	echo "return_var: ".$return_var;
 ?>
