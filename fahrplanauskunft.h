@@ -216,8 +216,8 @@ station* initHalt(char *name, list **listRoot) {
 	stInit = (station*)malloc(sizeof(station));
 	strcpy(stInit->name, name);
 	stInit->p = NULL;
-	stInit->prev = 0;
-	stInit->lengthSum = 0;
+	stInit->prev = NULL;
+	stInit->lengthSum = -1;
 	stInit->visited = NOTVISITED;
 	
 	return stInit;

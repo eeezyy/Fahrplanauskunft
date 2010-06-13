@@ -3,7 +3,7 @@ struct edge;
 typedef struct node {
 	char name[50];
 	struct edge *p;
-	int prev;
+	struct node prev;
 	int lengthSum;
 	int visited;
 } station;
