@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 		}
 	}
+	search(startStation, endStation, heapBeginn);
 	printStations(endStation);
 				
 	return EXIT_SUCCESS;

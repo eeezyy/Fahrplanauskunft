@@ -1,7 +1,7 @@
 
 void search(station *startStation, station *endStation, heapnode **heap) {
 	station *currentStation = NULL;
-	while(currentStation == endStation) {
+	while(currentStation != endStation) {
 		path *tempPath = startStation->p;
 		station *tempStation = startStation;
 		while(tempPath != NULL) {
