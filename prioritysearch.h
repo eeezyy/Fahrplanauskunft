@@ -4,15 +4,18 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 	path *tempPath = currentStation->p;
 	station *tempStation = startStation;
 	while(currentStation != endStation) {
+		station *test = NULL;
+		if(tempPath != NULL)
+			test = tempPath->halt;
 		while(tempPath != NULL) {
 			if (currentStation->lengthSum != -1) {
 				tempPath->halt->lengthSum = currentStation->lengthSum + tempPath->length;
 			} else {
 				tempPath->halt->lengthSum = tempPath->length;
 			}
-			if(tempPath->halt != currentStation) {
-				tempPath->halt->prev = currentStation;
-				fprintf(stdout, "%s -> %s\n", currentStation->name, tempPath->halt->name);
+			if(tempPath->halt != test) {
+				tempPath->halt->prev = test;
+				fprintf(stdout, "%s -> %s\n", test->name, tempPath->halt->name);
 				heapNodeInsert(heap, tempPath->halt);
 			}
 			tempPath = tempPath->next;

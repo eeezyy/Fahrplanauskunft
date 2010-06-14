@@ -252,16 +252,16 @@ void displaypath(list **listRoot)
 {
 	list *listNode = *listRoot;
 	int counter = 0;
-//	fprintf(stdout,"read-process launched\n");
+	fprintf(stdout,"read-process launched\n");
 	while(listNode != NULL)
 	{
 		//if(listNode->p == NULL)
 						//fprintf(stderr, "test\n");
-	//fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
+	fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
 		counter++;
 		path *temp = listNode->p->next;
 		while(temp != NULL) {
-	//	fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
+		fprintf(stdout,"\tlength: %d\tmark: %s\tname: %s\n", temp->length, temp->mark, temp->halt->name);
 			temp = temp->next;
 		}
 		listNode = listNode->next;
