@@ -255,9 +255,7 @@ void displaypath(list **listRoot)
 	fprintf(stdout,"read-process launched\n");
 	while(listNode != NULL)
 	{
-		//if(listNode->p == NULL)
-						//fprintf(stderr, "test\n");
-	fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
+		fprintf(stdout,"length: %d\tmark: %s\tname: %s\n", listNode->p->length, listNode->p->mark, listNode->p->halt->name);
 		counter++;
 		path *temp = listNode->p->next;
 		while(temp != NULL) {
@@ -271,18 +269,17 @@ void displaypath(list **listRoot)
 
 void chomp(char *str)
 {
-   size_t p=strlen(str);
-   /* '\n' mit '\0' überschreiben */
-   if(str[p-1] == '\n')
-   {
-	str[p-1]='\0';
-   }
+	size_t p=strlen(str);
+	// remove new line
+	if(str[p-1] == '\n')
+	{
+		str[p-1]='\0';
+	}
 }
 
 station *searchHalt(char* halt, list **listRoot)
 {
 	list *elem = *listRoot;
-	int ok = 0;
 	while(elem != NULL)
 	{
 		if(elem->p->halt != NULL) 

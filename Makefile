@@ -1,6 +1,6 @@
 # Makefile for 'fahrplanauskunft'
 VERSION=2.0.0
-CFLAGS=-g -Wall -O -lm
+CFLAGS=-g -Wall -O
 PROGRAM=fahrplanauskunft
 CHECKSCRIPT=check.sh
 

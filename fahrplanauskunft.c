@@ -34,13 +34,12 @@ int main(int argc, char *argv[])
 	char source[40];
 	char destination[40];
 	
-	fprintf(stdout, "\nBitte die Station, welche als Anfangspunkt für die Route gilt, eingeben:\n");
-	fgets(source, 50,stdin);
+	fprintf(stdout, "Start: ");
+	fgets(source, 50, stdin);
 	chomp(source);
-	fprintf(stdout, "\nBitte Zielstation eingeben:\n");
-	fgets(destination, 50,stdin);
+	fprintf(stdout, "Ziel: ");
+	fgets(destination, 50, stdin);
 	chomp(destination);
-	//fprintf(stdout, "\n%s\t %s\n", source, destination);
 	if(strcmp(source, destination) == 0)
 	{
 		fprintf(stdout, "Sie befinden sich bereits an der eingegebenen Station.\n");
@@ -51,7 +50,7 @@ int main(int argc, char *argv[])
 		startStation = searchHalt(source, listRoot);
 		endStation = searchHalt(destination, listRoot);
 		if(startStation == NULL || endStation == NULL) {
-			fprintf(stdout, "Mindestens eine Station ist nicht verfügbar!\n");
+			fprintf(stderr, "Mindestens eine Station ist nicht verfügbar!\n");
 			exit(EXIT_SUCCESS);
 		}
 	}

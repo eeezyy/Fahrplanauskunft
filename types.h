@@ -2,14 +2,17 @@ struct edge;
 
 typedef struct node {
 	char name[50];
+	// pointer to the adjazenz pathnode
 	struct edge *p;
 	struct node *prev;
+	// distance from startStation
 	int lengthSum;
 	int visited;
 } station;
 
 typedef struct edge {
 	station *halt;
+	// distance from previous station
 	int length;
 	char mark[10];
 	struct edge *next;

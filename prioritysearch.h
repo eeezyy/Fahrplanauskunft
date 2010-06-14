@@ -2,7 +2,6 @@
 void search(station *startStation, station *endStation, heapnode **heap) {
 	station *currentStation = startStation;
 	path *tempPath = currentStation->p;
-	station *tempStation = startStation;
 	while(currentStation != endStation) {
 		station *test = NULL;
 		if(tempPath != NULL)
@@ -15,28 +14,23 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			}
 			if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
 				tempPath->halt->prev = test;
-				fprintf(stdout, "%s -> %s\n", test->name, tempPath->halt->name);
+				//fprintf(stdout, "%s -> %s\n", test->name, tempPath->halt->name);
 				heapNodeInsert(heap, tempPath->halt);
 			}
 			tempPath = tempPath->next;
 		}
-
-		//tempStation = currentStation;
 
 		if(currentStation->visited != VISITED_BEGINN) {
 			tempPath = currentStation->p;
 			if(tempPath != NULL && tempPath->halt != NULL)
 				tempPath->halt->visited = VISITED_BEGINN;
 		}
-		//fprintf(stdout, "%s length: %i\n", currentStation->name, currentStation->lengthSum);
 		if(currentStation == endStation) {
 			return;
 		}
 		if(*heap != NULL) {
 			currentStation = heapNodeRemove(heap);
 		}
-		//if(currentStation != tempStation)
-		//	currentStation->prev = tempStation;
 	}
 }
 
@@ -57,6 +51,6 @@ station *printStations(station *endStation){
 			}
 		}
 		fprintf(stdout, "%s\n", endStation->name);
-		return endStation;
 	}
+	return endStation;
 }

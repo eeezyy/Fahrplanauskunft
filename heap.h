@@ -1,5 +1,3 @@
-
-
 // insert new node in heap
 heapnode *heapNodeInsert(heapnode **root, station *insert);
 // return the smallest node (station with minimal distance)
@@ -18,19 +16,6 @@ heapnode *heapNodeInsert(heapnode **root, station *insert) {
 	newNode->left = NULL;
 	newNode->right = NULL;
 
-	/*
-	if(root == NULL)
-		fprintf(stdout, "%s\n", newNode->halt->name);
-	else {
-		if (*root != NULL) {
-			heapnode *temp = *root;
-			fprintf(stdout, "ROOT!=NULL, %s, %s\n", temp->halt->name, newNode->halt->name);
-		}
-		else
-			fprintf(stdout, "*ROOT == NULL\n");
-	} */
-
-	// add new node to heap
 	return mergeHeaps(root, newNode);
 }
 
@@ -73,9 +58,6 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 	while(1) {
 		// check if done
 		if(R == NULL) {
-			//fprintf(stdout, "R == NULL\n");
-			//fprintf(stdout, "heap-address %i\n", (int)heapAddress);
-
 			// write new root node to the heap address
 			*heapAddress = P;
 			return P;
@@ -97,21 +79,16 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 }
 
 station *heapNodeRemove(heapnode **heapAddress) {
-			//fprintf(stdout, "test merge in remove\n");
 	if(heapAddress != NULL) {
 		if(*heapAddress != NULL) {
-			//fprintf(stdout, "test merge in remove\n");
 			heapnode *root = *heapAddress;
 			heapnode *temp = root;
 			station *halt = root->halt;
-			//fprintf(stdout, "before merge in remove\n");
 			*heapAddress = mergeHeaps(&(*heapAddress)->left, root->right);
-			//fprintf(stdout, "after merge in remove\n");
 			free(temp);
 			return halt;
 		}
 	}
-	//fprintf(stdout, "HeapNodeRemove NULL\n");
 	return NULL;
 }
 
@@ -210,8 +187,6 @@ heapnode **recursiveHeapSearch2(heapnode **root, heapnode **node, station *findS
 }
 
 heapnode **heapNodeChange(heapnode **root, station *change, int newLength) {
-	heapnode *temp = *root;
 	return recursiveHeapSearch(root, root, change, newLength);
 }
-
 
