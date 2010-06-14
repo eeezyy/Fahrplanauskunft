@@ -18,6 +18,9 @@ test-heap: test-heap.c heap.h
 check: ${CHECKSCRIPT} ${PROGRAM}
 	./${CHECKSCRIPT} ${PROGRAM}
 
+checkall: testall.sh
+	./testall.sh
+
 clean:
 	rm -f ./${PROGRAM}
 	rm -f ./${PROGRAM}.o

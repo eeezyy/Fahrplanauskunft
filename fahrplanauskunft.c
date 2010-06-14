@@ -35,10 +35,10 @@ int main(int argc, char *argv[])
 	char destination[40];
 	
 	fprintf(stdout, "\nBitte die Station, welche als Anfangspunkt für die Route gilt, eingeben:\n");
-	fgets(source, 25,stdin);
+	fgets(source, 50,stdin);
 	chomp(source);
 	fprintf(stdout, "\nBitte Zielstation eingeben:\n");
-	fgets(destination, 25,stdin);
+	fgets(destination, 50,stdin);
 	chomp(destination);
 	//fprintf(stdout, "\n%s\t %s\n", source, destination);
 	if(strcmp(source, destination) == 0)
@@ -58,7 +58,21 @@ int main(int argc, char *argv[])
 	search(startStation, endStation, heapBeginn);
 	fprintf(stdout, "\nRoute\n-------------------\n");
 	printStations(endStation);
+	//printTestCases(listRoot, readIn);
 				
 	return EXIT_SUCCESS;
+}
+
+void printTestCases(list **listRoot, char *inputfile) {
+	list *list1 = *listRoot;
+	list *list2 = *listRoot;
+	while(list1 != NULL) {
+		while(list2 != NULL) {
+			fprintf(stdout, "echo -e \"%s\\n%s\\n\" | %s %s 1> /dev/null\n", list1->p->halt->name, list2->p->halt->name, programname, inputfile);
+			list2 = list2->next;
+		}
+		list1 = list1->next;
+		list2 = *listRoot;
+	}
 }
 
