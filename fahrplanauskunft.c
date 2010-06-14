@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
 	search(startStation, endStation, heapBeginn);
 	fprintf(stdout, "\nRoute\n-------------------\n");
 	printStations(endStation);
+	fprintf(stdout, "Fahrtdauer: %i\n", endStation->lengthSum);
 	//printTestCases(listRoot, readIn);
 				
 	return EXIT_SUCCESS;

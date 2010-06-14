@@ -1,5 +1,6 @@
 
 void search(station *startStation, station *endStation, heapnode **heap) {
+	startStation->visited = VISITED_BEGINN;
 	station *currentStation = startStation;
 	path *tempPath = currentStation->p;
 	while(currentStation != endStation) {
@@ -14,7 +15,6 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			}
 			if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
 				tempPath->halt->prev = test;
-				//fprintf(stdout, "%s -> %s\n", test->name, tempPath->halt->name);
 				heapNodeInsert(heap, tempPath->halt);
 			}
 			tempPath = tempPath->next;
