@@ -40,11 +40,23 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 	}
 }
 
-void printStations(station *endStation){
+station *printStations(station *endStation){
+	station *next = NULL;
 	if(endStation != NULL) {
 		if(endStation->prev != NULL) {
-			printStations(endStation->prev);
+			next = printStations(endStation->prev);
+		}
+		path *tempPath = endStation->p;
+		if(next != NULL) {
+			while(tempPath != NULL) {
+				if(tempPath->halt == next) {
+					fprintf(stdout, "mark: %s\n", tempPath->mark);
+					break;
+				}
+				tempPath = tempPath->next;
+			}
 		}
 		fprintf(stdout, "%s\n", endStation->name);
+		return endStation;
 	}
 }
