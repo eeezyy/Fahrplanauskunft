@@ -1,7 +1,5 @@
- 2. heapNodeChange implementieren
+ 2. heapNodeChange fehler beheben
  3. Priority Search First Algorithmus Implementation
-	3.4. Previous Station eintragen.
-	     Mit aktueller Station im Punkt 1.2. fortsetzen.
 	(Falls Station lengthSum = -1, ist Station normal nicht im heap, da
 	 auch noch nicht angesprungen! Wenn aber eine Station angesprungen wird,
 	 die schon eine lengthSum enthält und mit dem neuen Weg kürzer wird,
@@ -9,9 +7,6 @@
  4. Umstieg mit einberechnen.
  5. Ausgabe der Fahrtdauer mit jeder Station und der Linie.
  6. Testfälle
- 7. Ringlinie testen, evtl. anpassen
-	1. von welcher Richtung wurde gefahren
-	2. lengthSum vergleichen
  8. Thread-Implementation
  9. Testfälle
 10. Ergebnis beider Threads zusammenführen mit Ausgabe.
