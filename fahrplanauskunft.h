@@ -171,7 +171,7 @@ int listClean(list **listRoot) {
 	// remember previous node,
 	// to connect if one node was removed
 	list *prev = NULL;
-	// go throuh all nodes
+	// go through all nodes
 	while(temp != NULL) {
 		// look for stations in adjazenz list with no next (no destination)
 		if(temp->p->next == NULL) {

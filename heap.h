@@ -2,8 +2,6 @@
 heapnode *heapNodeInsert(heapnode **root, station *insert);
 // return the smallest node (station with minimal distance)
 station *heapNodeRemove(heapnode **heapAddress);
-// change the value of one node and rearrange the heap
-heapnode **heapNodeChange(heapnode **root, station *change, int newLength);
 // core function for heap, merges two heap trees, returns the root node
 // normaly used to add a node to heap tree
 heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
@@ -31,17 +29,18 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 		P = NULL;
 	// merge trees
 	while(1) {
+		// if new heap/heapnode is NULL
 		if(Q == NULL) {
-			//fprintf(stdout, "Q == NULL\n");
 			D = (P == NULL)? 1 : P->dist;
 			break;
 		}
+		// if root heap is NULL set new heap/heapnode as root heap
 		if(P == NULL) {
-			//fprintf(stdout, "P == NULL\n");
 			P = Q;
 			D = 0;
 			break;
 		}
+		// compare which node is smaller
 		if(P->halt->lengthSum <= Q->halt->lengthSum) {
 			T = P->right;
 			P->right = R;
@@ -84,8 +83,10 @@ station *heapNodeRemove(heapnode **heapAddress) {
 			heapnode *root = *heapAddress;
 			heapnode *temp = root;
 			station *halt = root->halt;
+			// write new node to root
 			*heapAddress = mergeHeaps(&(*heapAddress)->left, root->right);
 			free(temp);
+			// return removed node
 			return halt;
 		}
 	}
