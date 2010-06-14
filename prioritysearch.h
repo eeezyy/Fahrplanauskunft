@@ -13,7 +13,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			} else {
 				tempPath->halt->lengthSum = tempPath->length;
 			}
-			if(tempPath->halt != test) {
+			if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
 				tempPath->halt->prev = test;
 				fprintf(stdout, "%s -> %s\n", test->name, tempPath->halt->name);
 				heapNodeInsert(heap, tempPath->halt);
