@@ -26,7 +26,10 @@ int main(int argc, char *argv[])
 
 	//displaypath(listRoot);
 
-
+	if(count == 0) {
+		fprintf(stdout, "Datei enthält keine Stationen\n");
+		exit(EXIT_SUCCESS);
+	}
 	//buffer for defining source and destination halt
 	char source[40];
 	char destination[40];
@@ -53,6 +56,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	search(startStation, endStation, heapBeginn);
+	fprintf(stdout, "\nRoute\n-------------------\n");
 	printStations(endStation);
 				
 	return EXIT_SUCCESS;

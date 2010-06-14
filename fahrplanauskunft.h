@@ -216,7 +216,9 @@ char *trimTabsAndBlanks(char *string) {
 }
 
 station* initHalt(char *name, list **listRoot) {
-	list *temp = *listRoot;
+	list *temp = NULL;
+	if(listRoot != NULL)
+		temp = *listRoot;
 	while(temp != NULL) {
 		if(temp->p->halt != NULL) {
 			if(strcmp(temp->p->halt->name,name) == 0) {
