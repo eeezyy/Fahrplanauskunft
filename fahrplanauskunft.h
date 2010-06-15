@@ -8,6 +8,7 @@
 #define VISITED_BEGINN 1
 #define VISITED_END 2
 #define BUFFERSIZE 2024
+#define CHANGETIME 5
 
 char *programname;
 
