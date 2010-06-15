@@ -26,10 +26,10 @@ clean:
 	rm -f ./${PROGRAM}.o
 	rm -f ./test-heap
 	
-dist: all distclean
+dist: ${PROGRAM} distclean
 	mkdir ../${PROGRAM}-${VERSION}/
 	cp * ../${PROGRAM}-${VERSION}/
-	tar cvzf ./${PROGRAM}-${VERSION}.tgz ../tron-${VERSION}
+	tar cvzf ./${PROGRAM}-${VERSION}.tgz ../${PROGRAM}-${VERSION}
 	rm -r ../${PROGRAM}-${VERSION}/
 
 distclean:
