@@ -26,6 +26,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			} else {
 				tempPath->halt->lengthSum = tempPath->length;
 			}
+			fprintf(stdout, "%s -> %s %i\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum);
 			// count in change
 			if(mark != NULL) {
 				if(strcmp(mark, tempPath->mark) != 0) {
