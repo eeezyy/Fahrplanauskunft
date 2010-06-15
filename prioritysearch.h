@@ -11,27 +11,34 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 	path *tempPath = currentStation->p;
 	path *previousPath = NULL;
 	while(currentStation != endStation) {
-		// remember station of path, (first node in adjazenz list)
-		station *test = NULL;
-		// remember mark of station
-		char *mark = NULL;
+		// remember path, (first node in adjazenz list)
+		path *firstNodePath = NULL;
 		if(tempPath != NULL) {
-			test = tempPath->halt;
-			mark = tempPath->mark;
+			firstNodePath = tempPath;
 		}
 		// to go through all destination from current station
 		while(tempPath != NULL) {
 			// when this station is not first station of adjazenz list, and not visited yet
-			if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
+			if(tempPath->halt != firstNodePath->halt && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
-				if (test->lengthSum != -1) {
-					tempPath->halt->lengthSum = test->lengthSum + tempPath->length;
+				if (firstNodePath->halt->lengthSum != -1) {
+					tempPath->halt->lengthSum = firstNodePath->halt->lengthSum + tempPath->length;
 				} else {
 					tempPath->halt->lengthSum = tempPath->length;
 				}
 
+				// count in change
+				path *tempPathForMark = NULL;
+				if(firstNodePath->halt != NULL && firstNodePath->halt->prev != NULL)
+					tempPathForMark = firstNodePath->halt->prev->p;
+				while(tempPathForMark != NULL) {
+					if(strcmp(tempPathForMark->mark, tempPath->mark) != 0) {
+						tempPath->halt->lengthSum += CHANGETIME;
+					}
+					tempPathForMark = tempPathForMark->next;
+				}
 				// set previous station to this station
-				tempPath->halt->prev = test;
+				tempPath->halt->prev = firstNodePath->halt;
 
 				// check if node is already in heap, then remove it
 				if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
