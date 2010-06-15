@@ -31,14 +31,14 @@ int main(int argc, char *argv[])
 		exit(EXIT_SUCCESS);
 	}
 	//buffer for defining source and destination halt
-	char source[40];
-	char destination[40];
+	char source[BUFFERSIZE];
+	char destination[BUFFERSIZE];
 	
 	fprintf(stdout, "Start: ");
-	fgets(source, 50, stdin);
+	fgets(source, BUFFERSIZE, stdin);
 	chomp(source);
 	fprintf(stdout, "Ziel: ");
-	fgets(destination, 50, stdin);
+	fgets(destination, BUFFERSIZE, stdin);
 	chomp(destination);
 	if(strcmp(source, destination) == 0)
 	{
@@ -61,18 +61,5 @@ int main(int argc, char *argv[])
 	//printTestCases(listRoot, readIn);
 				
 	return EXIT_SUCCESS;
-}
-
-void printTestCases(list **listRoot, char *inputfile) {
-	list *list1 = *listRoot;
-	list *list2 = *listRoot;
-	while(list1 != NULL) {
-		while(list2 != NULL) {
-			fprintf(stdout, "echo -e \"%s\\n%s\\n\" | %s %s 1> /dev/null\n", list1->p->halt->name, list2->p->halt->name, programname, inputfile);
-			list2 = list2->next;
-		}
-		list1 = list1->next;
-		list2 = *listRoot;
-	}
 }
 

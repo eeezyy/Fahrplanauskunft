@@ -3,10 +3,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+// visited constants
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define VISITED_END 2
-#define BUFFERSIZE 501
+#define BUFFERSIZE 2024
 
 char *programname;
 
@@ -31,6 +32,7 @@ void chomp(char *str);
 station *searchHalt(char* halt, list **listRoot);
 // debug functions
 void displaypath(list **listRoot);
+void printTestCases(list **listRoot, char *inputfile);
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
 
@@ -263,7 +265,7 @@ station* initHalt(char *name, list **listRoot) {
 	// if not found, allocate new station, and initialize
 	station* stInit;
 	stInit = (station*)malloc(sizeof(station));
-	strcpy(stInit->name, name);
+	stInit->name = name;
 	stInit->p = NULL;
 	stInit->prev = NULL;
 	stInit->lengthSum = -1;
@@ -277,7 +279,7 @@ path* initPath(char *mark, int length)
 	// allocate new path object and initialize
 	path *p = (path*) malloc(sizeof(path));
 	p->length = length;
-	strcpy(p->mark, mark);
+	p->mark = mark;
 	p->halt = NULL;
 	p->next = NULL;
 	return p;	
@@ -329,5 +331,18 @@ void displaypath(list **listRoot)
 		listNode = listNode->next;
 	}
 	fprintf(stdout,"\nInsgesamt sind es %d Stationen\n", counter);
+}
+
+void printTestCases(list **listRoot, char *inputfile) {
+	list *list1 = *listRoot;
+	list *list2 = *listRoot;
+	while(list1 != NULL) {
+		while(list2 != NULL) {
+			fprintf(stdout, "echo -e \"%s\\n%s\\n\" | %s %s 1> /dev/null\n", list1->p->halt->name, list2->p->halt->name, programname, inputfile);
+			list2 = list2->next;
+		}
+		list1 = list1->next;
+		list2 = *listRoot;
+	}
 }
 
