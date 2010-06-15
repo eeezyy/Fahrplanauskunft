@@ -27,16 +27,6 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 					tempPath->halt->lengthSum = tempPath->length;
 				}
 
-				// count in change
-				path *tempPathForMark = NULL;
-				if(firstNodePath->halt != NULL && firstNodePath->halt->prev != NULL)
-					tempPathForMark = firstNodePath->halt->prev->p;
-				while(tempPathForMark != NULL) {
-					if(strcmp(tempPathForMark->mark, tempPath->mark) != 0) {
-						tempPath->halt->lengthSum += CHANGETIME;
-					}
-					tempPathForMark = tempPathForMark->next;
-				}
 				// set previous station to this station
 				tempPath->halt->prev = firstNodePath->halt;
 
