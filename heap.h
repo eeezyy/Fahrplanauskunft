@@ -93,3 +93,23 @@ station *heapNodeRemove(heapnode **heapAddress) {
 	return NULL;
 }
 
+int showHeapContent(heapnode *left, heapnode *right) {
+	int counterLeft = 0;
+	int counterRight = 0;
+	if(left != NULL) {
+		counterLeft = showHeapContent(left->left, left->right) + 1;
+	}
+	if(right != NULL) {
+		counterRight = showHeapContent(right->left, right->right) + 1;
+	}
+	if(left != NULL && left->halt != NULL) {
+		fprintf(stdout, "%i. %s(%i)\n", counterLeft, left->halt->name, left->halt->lengthSum);
+	}
+	if(right != NULL && right->halt != NULL) {
+		fprintf(stdout, "%i. %s(%i)\n", counterRight, right->halt->name, right->halt->lengthSum);
+	}
+	if(counterLeft > counterRight)
+		return counterLeft;
+	else
+		return counterRight;
+}

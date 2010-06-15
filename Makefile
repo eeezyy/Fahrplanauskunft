@@ -24,6 +24,7 @@ checkall: testall.sh
 clean:
 	rm -f ./${PROGRAM}
 	rm -f ./${PROGRAM}.o
+	rm -f ./test-heap
 	
 dist: all distclean
 	mkdir ../${PROGRAM}-${VERSION}/

@@ -32,16 +32,27 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 				}
 				fprintf(stdout, "%s -> %s: %i(%i) %s: %i\n\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, tempPath->length, test->name, test->lengthSum);
 				// count in change
-				if(mark != NULL) {
-					if(strcmp(mark, tempPath->mark) != 0) {
-						tempPath->halt->lengthSum += CHANGETIME;
+				path *markPath = NULL;
+				if(test != NULL)
+					markPath = test->p;
+				while(markPath != NULL) {
+					if(markPath->halt == test) {
+						if(mark != NULL) {
+							if(strcmp(markPath->mark, tempPath->mark) != 0) {
+								fprintf(stdout, "Umstieg: %s (%s) - %s (%s)\n", markPath->halt->name, markPath->mark, tempPath->halt->name, tempPath->mark);
+								tempPath->halt->lengthSum += CHANGETIME;
+							}
+						}
 					}
+					markPath = markPath->next;
 				}
 
 				// set previous station to this station
 				tempPath->halt->prev = test;
 				// insert station to the heap
 				heapNodeInsert(heap, tempPath->halt);
+				if(heap != NULL)
+					showHeapContent(*heap, NULL);
 			}
 			tempPath = tempPath->next;
 		}

@@ -20,9 +20,11 @@ int test1() {
 int test2() {
 	heapnode **heap1 = (heapnode **)malloc(sizeof(heapnode *));
 	station *st1 = (station *)malloc(sizeof(station));
+	st1->name = (char *)malloc(sizeof(char)*10);
 	strcpy(st1->name,"Node1");
 	st1->lengthSum = 3;
 	station *st2 = (station *)malloc(sizeof(station));
+	st1->name = (char *)malloc(sizeof(char)*10);
 	strcpy(st2->name,"Node2");
 	st2->lengthSum = 3;
 	heapNodeInsert(heap1, st1);
@@ -91,6 +93,8 @@ int test5() {
 	heapNodeInsert(heap1, st1);
 	heapNodeInsert(heap1, st2);
 	heapNodeInsert(heap1, st3);
+	printf("test\n");
+	//showHeapContent(*heap1, NULL);
 	//heapNodeChange(heap1, st2, 4);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
 	fprintf(stdout, "%i\n", heapNodeRemove(heap1)->lengthSum);
@@ -107,9 +111,9 @@ int test5() {
 int main() {
 	if(!test1()) fprintf(stdout, "test1\n");
 	if(!test2()) fprintf(stdout, "test2\n");
-	if(!test3()) fprintf(stdout, "test3\n");
-	if(!test4()) fprintf(stdout, "test4\n");
-	if(!test5()) fprintf(stdout, "test5\n");
+	//if(!test3()) fprintf(stdout, "test3\n");
+	//if(!test4()) fprintf(stdout, "test4\n");
+	//if(!test5()) fprintf(stdout, "test5\n");
 
 	return 1;
 }

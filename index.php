@@ -25,7 +25,7 @@
 		$return_val;
 		$result = exec ($command, $output, $return_var);
 		//echo "result: ".$result."<br />\n";
-		if($return_var = 0) {
+		if($return_var == 0) {
 			foreach($output as $line) {
 				echo $line."<br />\n";
 			}
