@@ -51,8 +51,11 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 				tempPath->halt->prev = test;
 				// insert station to the heap
 				heapNodeInsert(heap, tempPath->halt);
-				if(heap != NULL)
+				if(heap != NULL) {
 					showHeapContent(*heap, NULL);
+					checkHeapSort(*heap, NULL);
+					showHeapContent(*heap, NULL);
+				}
 			}
 			tempPath = tempPath->next;
 		}

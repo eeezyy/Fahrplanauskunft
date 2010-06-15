@@ -113,3 +113,39 @@ int showHeapContent(heapnode *left, heapnode *right) {
 	else
 		return counterRight;
 }
+
+heapnode *checkHeapSort(heapnode *left, heapnode *right) {
+	heapnode *smallerLeft = NULL;
+	heapnode *smallerRight = NULL;
+	station *temp = NULL;
+	if(left != NULL && left->halt != NULL) {
+		smallerLeft = showHeapContent(left->left, left->right);
+		if(smallerLeft != NULL && left->halt->lengthSum > smallerLeft->halt->lengthSum) {
+			temp = left->halt;
+			left->halt = smallerLeft->halt;
+			smallerLeft->halt = temp;
+		}
+	}
+	if(right != NULL && right->halt != NULL) {
+		smallerRight = showHeapContent(right->left, right->right);
+		if(smallerRight != NULL && right->halt->lengthSum > smallerRight->halt->lengthSum) {
+			temp = right->halt;
+			right->halt = smallerRight->halt;
+			smallerRight->halt = temp;
+		}
+	}
+
+	if(smallerRight != NULL) {
+		if(smallerLeft != NULL) {
+			if(smallerLeft->halt->lengthSum < smallerRight->halt->lengthSum) {
+				return smallerLeft;
+			} else {
+				return smallerRight;
+			}
+		} else {
+			return NULL;
+		}
+	} else {
+		return smallerLeft;
+	}
+}
