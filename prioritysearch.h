@@ -9,6 +9,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 	station *currentStation = startStation;
 	// currently visiting station, path is to used as adjazenz node
 	path *tempPath = currentStation->p;
+	path *previousPath = NULL;
 	while(currentStation != endStation) {
 		// remember station of path, (first node in adjazenz list)
 		station *test = NULL;
@@ -20,48 +21,32 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 		}
 		// to go through all destination from current station
 		while(tempPath != NULL) {
-
-		// when this station is not first station of adjazenz list, and not visited yet
-		if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
+			// when this station is not first station of adjazenz list, and not visited yet
+			if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
-				fprintf(stdout, "%s -> %s: %i(%i) %s: %i\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, tempPath->length, test->name, test->lengthSum);
 				if (test->lengthSum != -1) {
 					tempPath->halt->lengthSum = test->lengthSum + tempPath->length;
 				} else {
 					tempPath->halt->lengthSum = tempPath->length;
 				}
-				fprintf(stdout, "%s -> %s: %i(%i) %s: %i\n\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, tempPath->length, test->name, test->lengthSum);
-				// count in change
-				path *markPath = NULL;
-				if(test != NULL)
-					markPath = test->p;
-				while(markPath != NULL) {
-					if(markPath->halt == test) {
-						if(mark != NULL) {
-							if(strcmp(markPath->mark, tempPath->mark) != 0) {
-								fprintf(stdout, "Umstieg: %s (%s) - %s (%s)\n", markPath->halt->name, markPath->mark, tempPath->halt->name, tempPath->mark);
-								tempPath->halt->lengthSum += CHANGETIME;
-							}
-						}
-					}
-					markPath = markPath->next;
-				}
 
 				// set previous station to this station
 				tempPath->halt->prev = test;
+
+				// check if node is already in heap, then remove it
+				if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
+					heapNodeRemove(heap);
+				else if(heap != NULL && (*heap) != NULL)
+					checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);
 				// insert station to the heap
 				heapNodeInsert(heap, tempPath->halt);
-				if(heap != NULL) {
-					showHeapContent(*heap, NULL);
-					checkHeapSort(*heap, NULL);
-					showHeapContent(*heap, NULL);
-				}
 			}
 			tempPath = tempPath->next;
 		}
 		// if not yet visited, go to station
 		if(currentStation->visited != VISITED_BEGINN) {
 			// visit station
+			previousPath = tempPath;
 			tempPath = currentStation->p;
 			if(tempPath != NULL && tempPath->halt != NULL)
 				// set as visited
@@ -94,7 +79,7 @@ station *printStations(station *endStation){
 			while(tempPath != NULL) {
 				if(tempPath->halt == next) {
 					// if found, get mark of the path
-					fprintf(stdout, "mark: %s\n", tempPath->mark);
+					fprintf(stdout, "-> %s\n", tempPath->mark);
 					break;
 				}
 				tempPath = tempPath->next;

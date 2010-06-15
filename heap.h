@@ -5,6 +5,7 @@ station *heapNodeRemove(heapnode **heapAddress);
 // core function for heap, merges two heap trees, returns the root node
 // normaly used to add a node to heap tree
 heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
+heapnode *mergeHeaps2(heapnode *heapAddress, heapnode *Q);
 
 heapnode *heapNodeInsert(heapnode **root, station *insert) {
 	heapnode *newNode = (heapnode *)malloc(sizeof(heapnode));
@@ -41,7 +42,7 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 			break;
 		}
 		// compare which node is smaller
-		if(P->halt->lengthSum <= Q->halt->lengthSum) {
+		if(P->halt->lengthSum < Q->halt->lengthSum) {
 			T = P->right;
 			P->right = R;
 			R = P;
@@ -93,59 +94,98 @@ station *heapNodeRemove(heapnode **heapAddress) {
 	return NULL;
 }
 
-int showHeapContent(heapnode *left, heapnode *right) {
-	int counterLeft = 0;
-	int counterRight = 0;
-	if(left != NULL) {
-		counterLeft = showHeapContent(left->left, left->right) + 1;
-	}
-	if(right != NULL) {
-		counterRight = showHeapContent(right->left, right->right) + 1;
-	}
+heapnode *checkHeapSort(heapnode *left, heapnode *right, station *halt) {
+	heapnode *foundNodeLeft = NULL;
+	heapnode *foundNodeRight = NULL;
+	// recursive search, left and right node
 	if(left != NULL && left->halt != NULL) {
-		fprintf(stdout, "%i. %s(%i)\n", counterLeft, left->halt->name, left->halt->lengthSum);
+		if(left->halt == halt) {
+			return left;
+		}
+		foundNodeLeft = checkHeapSort(left->left, left->right, halt);
 	}
 	if(right != NULL && right->halt != NULL) {
-		fprintf(stdout, "%i. %s(%i)\n", counterRight, right->halt->name, right->halt->lengthSum);
-	}
-	if(counterLeft > counterRight)
-		return counterLeft;
-	else
-		return counterRight;
-}
-
-heapnode *checkHeapSort(heapnode *left, heapnode *right) {
-	heapnode *smallerLeft = NULL;
-	heapnode *smallerRight = NULL;
-	station *temp = NULL;
-	if(left != NULL && left->halt != NULL) {
-		smallerLeft = showHeapContent(left->left, left->right);
-		if(smallerLeft != NULL && left->halt->lengthSum > smallerLeft->halt->lengthSum) {
-			temp = left->halt;
-			left->halt = smallerLeft->halt;
-			smallerLeft->halt = temp;
+		if(right->halt == halt) {
+			return right;
 		}
+		foundNodeRight = checkHeapSort(right->left, right->right, halt);
 	}
-	if(right != NULL && right->halt != NULL) {
-		smallerRight = showHeapContent(right->left, right->right);
-		if(smallerRight != NULL && right->halt->lengthSum > smallerRight->halt->lengthSum) {
-			temp = right->halt;
-			right->halt = smallerRight->halt;
-			smallerRight->halt = temp;
-		}
-	}
-
-	if(smallerRight != NULL) {
-		if(smallerLeft != NULL) {
-			if(smallerLeft->halt->lengthSum < smallerRight->halt->lengthSum) {
-				return smallerLeft;
+	// when found, remove node
+	if(foundNodeLeft != NULL || foundNodeRight != NULL) {
+		if(foundNodeLeft != NULL) {
+			heapnode *tempMerge = mergeHeaps2(foundNodeLeft->left, foundNodeLeft->right);
+			if(left->left != NULL && halt == left->left->halt) {
+				left->left = tempMerge;
 			} else {
-				return smallerRight;
+				left->right = tempMerge;
 			}
+			free(foundNodeLeft);
 		} else {
-			return NULL;
+			heapnode *tempMerge = mergeHeaps2(foundNodeRight->left, foundNodeRight->right);
+			if(right->left != NULL && halt == right->left->halt) {
+				right->left = tempMerge;
+			} else {
+				right->right = tempMerge;
+			}
+			free(foundNodeRight);
 		}
-	} else {
-		return smallerLeft;
+	}
+	
+	return NULL;
+}
+
+heapnode *mergeHeaps2(heapnode *P, heapnode *Q) {
+	int D;
+	// initialize
+	heapnode *R = NULL;
+	heapnode *T;
+
+	// merge trees
+	while(1) {
+		// if new heap/heapnode is NULL
+		if(Q == NULL) {
+			D = (P == NULL)? 1 : P->dist;
+			break;
+		}
+		// if root heap is NULL set new heap/heapnode as root heap
+		if(P == NULL) {
+			P = Q;
+			D = 0;
+			break;
+		}
+		// compare which node is smaller
+		if(P->halt->lengthSum < Q->halt->lengthSum) {
+			T = P->right;
+			P->right = R;
+			R = P;
+			P = T;
+		} else {
+			T = Q->right;
+			Q->right = R;
+			R = Q;
+			Q = T;
+		}
+	}
+
+	while(1) {
+		// check if done
+		if(R == NULL) {
+			// write new root node to the heap address
+			return P;
+		}
+		// fix distances
+		Q = R->right;
+		if(R->left != NULL && R->left->dist < D) {
+			D = R->left->dist + 1;
+			R->right = R->left;
+			R->left = P;
+		} else {
+			D = D + 1;
+			R->right = P;
+		}
+		R->dist = D;
+		P = R;
+		R = Q;
 	}
 }
+

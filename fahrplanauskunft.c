@@ -1,8 +1,8 @@
 #include "types.h"
 #include "fahrplanauskunft.h"
+//#include "debug.h"
 #include "heap.h"
 #include "prioritysearch.h"
-
 
 int main(int argc, char *argv[]) 
 {
@@ -16,15 +16,12 @@ int main(int argc, char *argv[])
 
 	// addresses to heap-root for both threads
 	heapnode **heapBeginn = (heapnode **)malloc(sizeof(heapnode *));
-	//heapnode **heapEnd = (heapnode **)malloc(sizeof(heapnode *));
 
 	list **listRoot = (list **)malloc(sizeof(list *));
 	
 	char *readIn = argv[1];
 	int count = load(readIn, listRoot);
 	station *startStation, *endStation;
-
-	displaypath(listRoot);
 
 	if(count == 0) {
 		fprintf(stdout, "Datei enthält keine Stationen\n");
@@ -42,7 +39,7 @@ int main(int argc, char *argv[])
 	chomp(destination);
 	if(strcmp(source, destination) == 0)
 	{
-		fprintf(stdout, "Sie befinden sich bereits an der eingegebenen Station.\n");
+		fprintf(stderr, "Sie befinden sich bereits an der eingegebenen Station.\n");
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -55,10 +52,9 @@ int main(int argc, char *argv[])
 		}
 	}
 	search(startStation, endStation, heapBeginn);
-	fprintf(stdout, "\nRoute\n-------------------\n");
+	fprintf(stdout, "\nVerbindung\n-----------\n");
 	printStations(endStation);
 	fprintf(stdout, "Fahrtdauer: %i\n", endStation->lengthSum);
-	//printTestCases(listRoot, readIn);
 				
 	return EXIT_SUCCESS;
 }
