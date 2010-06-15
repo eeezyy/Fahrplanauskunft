@@ -50,7 +50,6 @@ int load(char *readIn, list **listRoot) {
 	// station names
 	char *halt1;
 	char *halt2 = NULL;
-	int length = 0;
 	char buffer[BUFFERSIZE];
 	// counter for stations
 	int counter = 0;
@@ -71,7 +70,9 @@ int load(char *readIn, list **listRoot) {
 			// station objects
 			// station 0, to remember previous station
 			station *station0 = NULL;
+			int prevLength = -1;
 			station *station1 = NULL;
+			int length = -1;
 			station *station2 = NULL;
 
 			// unimportant characters
@@ -104,6 +105,7 @@ int load(char *readIn, list **listRoot) {
 				if(token == NULL) {
 					break;
 				}
+				prevLength = length;
 				length = (int)strtol(token, NULL, 10);
 				// parse following station
 				token = trimTabsAndBlanks(strtok(NULL, "\""));
@@ -124,8 +126,8 @@ int load(char *readIn, list **listRoot) {
 				lastListNode->p->halt = station2;
 
 				// put into adjazenzlist
-				if(station0!=NULL)
-					adjazenzInsert(listRoot, station1, station0, length, mark);
+				if(station0!=NULL && prevLength != -1)
+					adjazenzInsert(listRoot, station1, station0, prevLength, mark);
 				adjazenzInsert(listRoot, station1, station2, length, mark);
 
 				// switch stations, for later use
@@ -134,8 +136,8 @@ int load(char *readIn, list **listRoot) {
 				station1 = station2;
 			} while (token != NULL);
 			// if station has previous station, add to adjazenzlist
-			if (station0 != NULL && station1 != NULL) {
-				adjazenzInsert(listRoot, station1, station0, length, mark);
+			if (station0 != NULL && station1 != NULL && prevLength != -1) {
+				adjazenzInsert(listRoot, station1, station0, prevLength, mark);
 			}
 		}
 	}

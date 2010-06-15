@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	int count = load(readIn, listRoot);
 	station *startStation, *endStation;
 
-	//displaypath(listRoot);
+	displaypath(listRoot);
 
 	if(count == 0) {
 		fprintf(stdout, "Datei enthält keine Stationen\n");
