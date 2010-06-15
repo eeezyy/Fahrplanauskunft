@@ -24,13 +24,13 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 		// when this station is not first station of adjazenz list, and not visited yet
 		if(tempPath->halt != test && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
-				fprintf(stdout, "%s -> %s %i %i %i\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, startStation->lengthSum, endStation->lengthSum);
+				fprintf(stdout, "%s -> %s: %i(%i) %s: %i\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, tempPath->length, test->name, test->lengthSum);
 				if (test->lengthSum != -1) {
 					tempPath->halt->lengthSum = test->lengthSum + tempPath->length;
 				} else {
 					tempPath->halt->lengthSum = tempPath->length;
 				}
-				fprintf(stdout, "%s -> %s: %i %s: %i\n\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, currentStation->name, currentStation->lengthSum);
+				fprintf(stdout, "%s -> %s: %i(%i) %s: %i\n\n", test->name, tempPath->halt->name, tempPath->halt->lengthSum, tempPath->length, test->name, test->lengthSum);
 				// count in change
 				if(mark != NULL) {
 					if(strcmp(mark, tempPath->mark) != 0) {
