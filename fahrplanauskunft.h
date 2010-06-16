@@ -8,7 +8,7 @@
 #define NOTVISITED 0
 #define VISITED_BEGINN 1
 #define BUFFERSIZE 2024
-#define CHANGETIME 5
+#define CHANGETIME 3
 
 char *programname;
 
