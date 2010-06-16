@@ -41,7 +41,10 @@
 					var markers = new Array();
 					var pointPrev = null;
 					var markPrev = null;
-					document.getElementsByName('time')[0].innerHTML = "<div style='font-size:20px'><b>Fahrtdauer: </b>"+itemsXML.time[0].Text+" min.</div>";
+					//if(itemsXML.time.length > 0 && (typeof(itemsXML.time[0].Text) != "undefined" || itemsXML.time[0].Text != ''))
+					if(typeof(itemsXML.time[0].Text) != "undefined" && itemsXML.time[0].Text != "")
+						document.getElementsByName('time')[0].innerHTML = "<div style='font-size:20px'><b>Fahrtdauer: </b>"+itemsXML.time[0].Text+" min.</div>";
+					if(itemsXML.station)
 					for(var i=0; i < itemsXML.station.length; i++) {
 						var bubbleinfo = itemsXML.station[i].name[0].Text;
 						var point = new LatLonPoint(itemsXML.station[i].lat[0].Text, itemsXML.station[i].lon[0].Text);
@@ -61,7 +64,8 @@
 						pointPrev = point;
 						markPrev = itemsXML.station[i].mark[0].Text;
 					}
-					mapstraction.centerAndZoomOnPoints(markers);
+					if(markers.length > 0)
+						mapstraction.centerAndZoomOnPoints(markers);
 				}
 			});
 		}
@@ -98,7 +102,8 @@
 		var centerPoint = new LatLonPoint(48.2092062, 16.3727778);
 		mapstraction.setCenterAndZoom(centerPoint, 12);
 		mapstraction.enableScrollWheelZoom();
-		mapstraction.centerAndZoomOnPoints(markers);
+		if(markers.length > 0)
+			mapstraction.centerAndZoomOnPoints(markers);
 		getXML();
 </script>
 </body>
