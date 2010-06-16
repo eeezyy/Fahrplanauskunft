@@ -21,22 +21,25 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			// when this station is not first station of adjazenz list, and not visited yet
 			if(tempPath->halt != firstNodePath->halt && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
+				int newLength;
 				if (firstNodePath->halt->lengthSum != -1) {
-					tempPath->halt->lengthSum = firstNodePath->halt->lengthSum + tempPath->length;
+					 newLength = firstNodePath->halt->lengthSum + tempPath->length;
 				} else {
-					tempPath->halt->lengthSum = tempPath->length;
+					newLength = tempPath->length;
 				}
+				if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
+					tempPath->halt->lengthSum = newLength;
+					// set previous station to this station
+					tempPath->halt->prev = firstNodePath->halt;
 
-				// set previous station to this station
-				tempPath->halt->prev = firstNodePath->halt;
-
-				// check if node is already in heap, then remove it
-				if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
-					heapNodeRemove(heap);
-				else if(heap != NULL && (*heap) != NULL)
-					checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);
-				// insert station to the heap
-				heapNodeInsert(heap, tempPath->halt);
+					// check if node is already in heap, then remove it
+					if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
+						heapNodeRemove(heap);
+					else if(heap != NULL && (*heap) != NULL)
+						checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);
+					// insert station to the heap
+					heapNodeInsert(heap, tempPath->halt);
+				}
 			}
 			tempPath = tempPath->next;
 		}
