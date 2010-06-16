@@ -27,8 +27,23 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 				} else {
 					newLength = tempPath->length;
 				}
+				// count in change
+				path *markPath = NULL;
+				if(firstNodePath->halt != NULL)
+					markPath = firstNodePath->halt->p;
+				while(markPath != NULL) {
+					if(markPath->halt == firstNodePath->halt) {
+							if(strcmp(markPath->mark, tempPath->mark) != 0) {
+								fprintf(stdout, "Umstieg: %s (%s) - %s (%s)\n", markPath->halt->name, markPath->mark, tempPath->halt->name, tempPath->mark);
+								newLength += CHANGETIME;
+							}
+					}
+					markPath = markPath->next;
+				}
+				
 				if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
 					tempPath->halt->lengthSum = newLength;
+					
 					// set previous station to this station
 					tempPath->halt->prev = firstNodePath->halt;
 
