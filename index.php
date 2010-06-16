@@ -8,10 +8,10 @@
 	<form onSubmit='getXML()' name='search'>
 		<table>
 			<tr>
-				<td>Aktuelle Station:</td><td><input type='text' name='start' <?php if(isset($_GET['start'])) echo "value='".$_GET['start']."'"; ?>onkeypress='noenter();'/></td>
+				<td>Aktuelle Station:</td><td><input type='text' name='start' <?php if(isset($_GET['start'])) echo "value='".$_GET['start']."'"; ?>onkeypress='noenter(event);'/></td>
 			</tr>
 			<tr>
-				<td>Ziel-Station:</td><td><input type='text' name='end' <?php if(isset($_GET['end'])) echo "value='".$_GET['end']."'"; ?>onkeypress='noenter()'/></td>
+				<td>Ziel-Station:</td><td><input type='text' name='end' <?php if(isset($_GET['end'])) echo "value='".$_GET['end']."'"; ?>onkeypress='noenter(event)'/></td>
 			</tr>
 			<tr>
 				<td /><td><input type='button' value='suchen' onSubmit='getXML()' onclick='getXML()'/></td>
