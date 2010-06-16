@@ -44,6 +44,8 @@
 					//if(itemsXML.time.length > 0 && (typeof(itemsXML.time[0].Text) != "undefined" || itemsXML.time[0].Text != ''))
 					if(typeof(itemsXML.time[0].Text) != "undefined" && itemsXML.time[0].Text != "")
 						document.getElementsByName('time')[0].innerHTML = "<div style='font-size:20px'><b>Fahrtdauer: </b>"+itemsXML.time[0].Text+" min.</div>";
+					else
+						document.getElementsByName('time')[0].innerHTML = '';
 					if(itemsXML.station)
 					for(var i=0; i < itemsXML.station.length; i++) {
 						var bubbleinfo = itemsXML.station[i].name[0].Text;
@@ -66,6 +68,8 @@
 					}
 					if(markers.length > 0)
 						mapstraction.centerAndZoomOnPoints(markers);
+					else
+						mapstraction.setCenterAndZoom(centerPoint, 12);
 				}
 			});
 		}
@@ -78,15 +82,15 @@
 		
 		function markColor($mark) {
 			switch($mark) {
-				case 'U1':
+				case 'u1':
 					return '#ff0000';
-				case 'U2':
+				case 'u2':
 					return '#9f66aa';
-				case 'U3':
+				case 'u3':
 					return '#f5821f';
-				case 'U4':
+				case 'u4':
 					return '#00a650';
-				case 'U6':
+				case 'u6':
 					return '#a76534';
 				default:
 					return '#000000';

@@ -7,6 +7,7 @@
 		//$str  = str_replace($search, $replace, $text);
 		$trans = array("ä" => "ae", "ö" => "oe", "ü" => "ue", "ß" => "ss");
 		$str = strtr($text, $trans);
+		$str = strtolower($str);
 		return $str;
 	}
 
