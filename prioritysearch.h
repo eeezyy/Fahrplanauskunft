@@ -28,7 +28,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 					newLength = tempPath->length;
 				}
 				// count in change
-				path *markPath = NULL;
+				/*path *markPath = NULL;
 				if(firstNodePath->halt != NULL)
 					markPath = firstNodePath->halt->p;
 				while(markPath != NULL) {
@@ -39,7 +39,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 							}
 					}
 					markPath = markPath->next;
-				}
+				}*/
 				
 				if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
 					tempPath->halt->lengthSum = newLength;
