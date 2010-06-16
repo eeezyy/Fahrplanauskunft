@@ -22,7 +22,7 @@
 	<td><div name='time'></div></td>
 	<tr>
 	<div style='font-size:11px'>
-		Info: Umstieg wird mit 3 min. berücksichtigt. Verbindungszeiten sind nicht verbindlich! 
+		Info: Umstieg wird mit 3 min. ber&uuml;cksichtigt. Verbindungszeiten sind nicht verbindlich! 
 	</div>
 	</table>
 	

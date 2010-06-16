@@ -34,7 +34,6 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 				while(markPath != NULL) {
 					if(markPath->halt == firstNodePath->halt) {
 							if(strcmp(markPath->mark, tempPath->mark) != 0) {
-								fprintf(stdout, "Umstieg: %s (%s) - %s (%s)\n", markPath->halt->name, markPath->mark, tempPath->halt->name, tempPath->mark);
 								newLength += CHANGETIME;
 							}
 					}
