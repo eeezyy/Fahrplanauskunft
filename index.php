@@ -21,6 +21,9 @@
 	</td>
 	<td><div name='time'></div></td>
 	<tr>
+	<div style='font-size:11px'>
+		Info: Umstieg wird mit 3 min. berücksichtigt. Verbindungszeiten sind nicht verbindlich! 
+	</div>
 	</table>
 	
 		<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAzf03MVeHzU_wJ2vX5hn7zRRIFV45slZifYGa4RUcYNz-B1Cj2RRE8AfSxR8gxJM8apFR4c-ItN7yHQ" type="text/javascript"></script>
