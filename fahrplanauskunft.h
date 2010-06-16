@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 #include <math.h>
 // visited constants
 #define NOTVISITED 0
@@ -218,7 +219,7 @@ char *trimTabsAndBlanks(char *string) {
 		for(i = 0, newIterator = 0; i < strlen(string); i++, newIterator++) {
 			// if not blank or tab, write character to buffer
 			if(string[i]!=' ' && string[i]!='\t') {
-				buffer[newIterator] = string[i];
+				buffer[newIterator] = tolower(string[i]);
 				wasBlank = 0;
 				wasTab = 0;
 			} else if(string[i]==' ') {
