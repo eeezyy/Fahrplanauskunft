@@ -1,6 +1,6 @@
 #include "types.h"
 #include "fahrplanauskunft.h"
-//#include "debug.h"
+#include "debug.h"
 #include "heap.h"
 #include "prioritysearch.h"
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	char *readIn = argv[1];
 	int count = load(readIn, listRoot);
 	station *startStation, *endStation;
-	//displaypath(listRoot);
+	displaypath(listRoot);
 	if(count == 0) {
 		fprintf(stdout, "Datei enthält keine Stationen\n");
 		exit(EXIT_SUCCESS);

@@ -6,6 +6,7 @@ station *heapNodeRemove(heapnode **heapAddress);
 // normaly used to add a node to heap tree
 heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
 heapnode *mergeHeaps2(heapnode *heapAddress, heapnode *Q);
+station *searchHeapNode(heapnode *left, heapnode *right, station *halt);
 
 heapnode *heapNodeInsert(heapnode **root, station *insert) {
 	heapnode *newNode = (heapnode *)malloc(sizeof(heapnode));
@@ -187,5 +188,33 @@ heapnode *mergeHeaps2(heapnode *P, heapnode *Q) {
 		P = R;
 		R = Q;
 	}
+}
+
+station *searchHeapNode(heapnode *left, heapnode *right, station *halt) {
+	station *foundNodeLeft = NULL;
+	station *foundNodeRight = NULL;
+	// recursive search, left and right node
+	if(left != NULL && left->halt != NULL) {
+		if(left->halt == halt) {
+			return left->halt;
+		}
+		foundNodeLeft = searchHeapNode(left->left, left->right, halt);
+	}
+	if(right != NULL && right->halt != NULL && foundNodeLeft == NULL) {
+		if(right->halt == halt) {
+			return right->halt;
+		}
+		foundNodeRight = searchHeapNode(right->left, right->right, halt);
+	}
+	// when found, remove node
+	if(foundNodeLeft != NULL || foundNodeRight != NULL) {
+		if(foundNodeLeft != NULL) {
+			return foundNodeLeft;
+		} else {
+			return foundNodeRight;
+		}
+	}
+	
+	return NULL;
 }
 

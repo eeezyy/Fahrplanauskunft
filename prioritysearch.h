@@ -2,6 +2,7 @@
 void search(station *startStation, station *endStation, heapnode **heap);
 // print stations recursive, beginning with endStation, and using prev attribute
 station *printStations(station *endStation);
+path *getPreviousPath(path *firstNodePath);
 
 void search(station *startStation, station *endStation, heapnode **heap) {
 	// set start station as visited
@@ -17,9 +18,9 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 			firstNodePath = tempPath;
 		}
 		// to go through all destination from current station
-		while(tempPath != NULL) {
+		while(tempPath != NULL && tempPath->halt != NULL) {
 			// when this station is not first station of adjazenz list, and not visited yet
-			if(tempPath->halt != firstNodePath->halt && tempPath->halt->visited == NOTVISITED) {
+			if(tempPath->halt->name != firstNodePath->halt->name && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
 				int newLength;
 				if (firstNodePath->halt->lengthSum != -1) {
@@ -29,28 +30,44 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 				}
 				// count in change
 				path *markPath = NULL;
-				if(firstNodePath->halt != NULL && firstNodePath->halt->prev != NULL)
-					markPath = firstNodePath->halt->prev->p;
-				while(markPath != NULL) {
-					if(markPath->halt == firstNodePath->halt) {
-							if(strcmp(markPath->mark, tempPath->mark) != 0) {
-								newLength += CHANGETIME;
-							}
+				markPath = getPreviousPath(firstNodePath);
+				if(markPath != NULL && tempPath != NULL)
+				{
+					if(strcmp(markPath->mark, tempPath->mark) != 0) {
+						newLength += CHANGETIME;
 					}
-					markPath = markPath->next;
 				}
-				
-				if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
+
+				//fprintf(stdout, "halt: [%-17.17s](%i) -> [%-17.17s] alt: %i neu: %i\n", firstNodePath->halt->name, firstNodePath->halt->lengthSum, tempPath->halt->name, tempPath->halt->lengthSum, newLength);
+				{
+				//if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
+					/*if(firstNodePath->halt->prev != NULL && markPath != NULL)
+						fprintf(stdout, "[%-17.17s] %s [%-17.17s] %s [%-17.17s] lengthSum %i, newlength %i\n", firstNodePath->halt->prev->name, markPath->mark, firstNodePath->halt->name, tempPath->mark, tempPath->halt->name, tempPath->length, newLength);
+					else if(firstNodePath->halt->prev != NULL)
+						fprintf(stdout, "[%-17.17s] -- [%-17.17s] %s [%-17.17s] lengthSum %i, newlength %i\n", firstNodePath->halt->prev->name, firstNodePath->halt->name, tempPath->mark, tempPath->halt->name, tempPath->length, newLength);
+					else
+					fprintf(stdout, "[x                ] -> [%-17.17s] %s [%-17.17s] lengthSum %i, newlength %i\n", firstNodePath->halt->name, tempPath->mark, tempPath->halt->name, tempPath->length, newLength);
+					*/
 					tempPath->halt->lengthSum = newLength;
 					
 					// set previous station to this station
 					tempPath->halt->prev = firstNodePath->halt;
 
 					// check if node is already in heap, then remove it
-					if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
+					/*if(heap != NULL && (*heap) != NULL && (*heap)->halt == tempPath->halt)
 						heapNodeRemove(heap);
 					else if(heap != NULL && (*heap) != NULL)
-						checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);
+						checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);*/
+					// insert station to the heap
+
+					// check if node is already in heap
+					station *foundStation = NULL;
+					if(heap != NULL && (*heap) != NULL && (*heap)->halt != NULL && tempPath->halt != NULL && (*heap)->halt->name == tempPath->halt->name)
+						foundStation = (*heap)->halt;
+					else if(heap != NULL && (*heap) != NULL)
+						foundStation = searchHeapNode((*heap)->left, (*heap)->right, tempPath->halt);
+					if(foundStation != NULL)
+						fprintf(stdout, "found station\n");
 					// insert station to the heap
 					heapNodeInsert(heap, tempPath->halt);
 				}
@@ -103,3 +120,17 @@ station *printStations(station *endStation){
 	}
 	return endStation;
 }
+
+path *getPreviousPath(path *firstNodePath) {
+	path *markPath = NULL;
+	if(firstNodePath->halt != NULL && firstNodePath->halt->prev != NULL)
+		markPath = firstNodePath->halt->prev->p;
+	while(markPath != NULL && markPath->halt != NULL) {
+		if(markPath->halt->name == firstNodePath->halt->name) {
+			return markPath;
+		}
+		markPath = markPath->next;
+	}
+	return NULL;
+}
+
