@@ -66,8 +66,8 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 						foundStation = (*heap)->halt;
 					else if(heap != NULL && (*heap) != NULL)
 						foundStation = searchHeapNode((*heap)->left, (*heap)->right, tempPath->halt);
-					if(foundStation != NULL)
-						fprintf(stdout, "found station\n");
+					//if(foundStation != NULL)
+						//fprintf(stdout, "found station\n");
 					// insert station to the heap
 					heapNodeInsert(heap, tempPath->halt);
 				}

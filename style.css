@@ -1,0 +1,46 @@
+html
+{
+	background-image:url(pics/back.png);
+	background-repeat: repeat-x;
+}
+
+#container
+{
+	background-image:url(pics/siteII.jpg);
+	background-repeat: none;
+	margin: auto;
+	width: 100%;
+	height: 240px;
+	min-width: 540px;
+}
+
+#head
+{
+	height: 85px;	
+	width: 370px; 
+	background-image:url(pics/logoII.png);
+	margin:auto;
+}
+
+#title
+{
+text-align:center;
+text-decoration: none;
+border:0px;
+}
+
+#addform
+{
+	border-spacing: 10px;
+	vertical-align: bottom;
+	text-decoration:none;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#info
+{
+	font-size:12px
+}

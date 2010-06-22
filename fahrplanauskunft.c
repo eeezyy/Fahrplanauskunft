@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
 	char *readIn = argv[1];
 	int count = load(readIn, listRoot);
 	station *startStation, *endStation;
-	displaypath(listRoot);
+	//displaypath(listRoot);
 	if(count == 0) {
-		fprintf(stdout, "Datei enthÃ¤lt keine Stationen\n");
+		fprintf(stdout, "Datei enthält keine Stationen\n");
 		exit(EXIT_SUCCESS);
 	}
 	//buffer for defining source and destination halt
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		startStation = searchHalt(source, listRoot);
 		endStation = searchHalt(destination, listRoot);
 		if(startStation == NULL || endStation == NULL) {
-			fprintf(stdout, "Mindestens eine Station ist nicht verfÃ¼gbar!\n");
+			fprintf(stdout, "Mindestens eine Station ist nicht verfügbar!\n");
 			exit(EXIT_SUCCESS);
 		}
 	}
