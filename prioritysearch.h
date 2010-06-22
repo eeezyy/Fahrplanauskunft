@@ -20,7 +20,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 		// to go through all destination from current station
 		while(tempPath != NULL && tempPath->halt != NULL) {
 			// when this station is not first station of adjazenz list, and not visited yet
-			if(tempPath->halt->name != firstNodePath->halt->name && tempPath->halt->visited == NOTVISITED) {
+			if(tempPath->halt != firstNodePath->halt && tempPath->halt->visited == NOTVISITED) {
 				// set distance to start station in (new) station
 				int newLength;
 				if (firstNodePath->halt->lengthSum != -1) {
@@ -37,7 +37,7 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 						newLength += CHANGETIME;
 					}
 				}
-
+				
 				//fprintf(stdout, "halt: [%-17.17s](%i) -> [%-17.17s] alt: %i neu: %i\n", firstNodePath->halt->name, firstNodePath->halt->lengthSum, tempPath->halt->name, tempPath->halt->lengthSum, newLength);
 				{
 				//if(tempPath->halt->lengthSum == -1 || tempPath->halt->lengthSum > newLength) {
@@ -58,7 +58,6 @@ void search(station *startStation, station *endStation, heapnode **heap) {
 						heapNodeRemove(heap);
 					else if(heap != NULL && (*heap) != NULL)
 						checkHeapSort((*heap)->left, (*heap)->right, tempPath->halt);*/
-					// insert station to the heap
 
 					// check if node is already in heap
 					station *foundStation = NULL;
@@ -133,4 +132,5 @@ path *getPreviousPath(path *firstNodePath) {
 	}
 	return NULL;
 }
+
 

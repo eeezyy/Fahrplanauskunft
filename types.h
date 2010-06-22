@@ -20,6 +20,7 @@ typedef struct edge {
 
 typedef struct treenode {
 	station *halt;
+	int value;
 	// distance = shortest path from node to NULL
 	// where left.dist >= right.dist
 	int dist;

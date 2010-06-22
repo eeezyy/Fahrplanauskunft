@@ -1,6 +1,6 @@
 #include "types.h"
 #include "fahrplanauskunft.h"
-#include "debug.h"
+//#include "debug.h"
 #include "heap.h"
 #include "prioritysearch.h"
 
