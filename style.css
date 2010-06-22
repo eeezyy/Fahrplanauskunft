@@ -44,3 +44,21 @@ border:0px;
 {
 	font-size:12px
 }
+
+.border
+{
+
+-webkit-border-radius: 8px;
+-khtml-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+background-image:url(pics/vista_aero.png);
+
+}
+.transparent_class 
+{
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}

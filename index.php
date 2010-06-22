@@ -16,19 +16,23 @@
 				<table>
 					<tr>
 						<td>
-									<div id ="title">
-										<img src="pics/header.png" /><!--<h1>Fahrplanauskunft U-Bahn Wien</h1>-->
-									</div>
+							<div id ="title">
+								<img src="pics/header.png" /><!--<h1>Fahrplanauskunft U-Bahn Wien</h1>-->
+							</div>
 						</td>
 					</tr>
 				</table>
-				<table>
-					<tr>
-						<td>Start:</td><td><input type='text' name='start' <?php if(isset($_GET['start'])) echo "value='".$_GET['start']."'"; ?>onkeypress='noenter(event);'/></td>
-						<td>Ziel:</td><td><input type='text' name='end' <?php if(isset($_GET['end'])) echo "value='".$_GET['end']."'"; ?>onkeypress='noenter(event)'/></td>
-						<td><input type='button' value='suchen' onSubmit='getXML()' onclick='getXML()'/></td>
-					</tr>
-				</table>
+				
+
+					<div class="border">
+						<table>
+							<tr>
+								<td>Start:</td><td><input class='transparent_class' type='text' name='start' <?php if(isset($_GET['start'])) echo "value='".$_GET['start']."'"; ?>onkeypress='noenter(event);'/></td>
+								<td>Ziel:</td><td><input class='transparent_class' type='text' name='end' <?php if(isset($_GET['end'])) echo "value='".$_GET['end']."'"; ?>onkeypress='noenter(event)'/></td>
+								<td><input type='button' value='suchen' onSubmit='getXML()' onclick='getXML()'/></td>
+							</tr>
+						</table>
+					</div>			
 			</form>
 		</td>
 	</tr>
@@ -39,12 +43,12 @@
 	</tr>		
 	<tr>
 		<td>
-			<div name='time'></div>
+			<div class="border" name='time'></div>
 		</td>
 	</tr>
 	</table>
 	</div>
-	<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAzf03MVeHzU_wJ2vX5hn7zRRIFV45slZifYGa4RUcYNz-B1Cj2RRE8AfSxR8gxJM8apFR4c-ItN7yHQ" type="text/javascript"></script>
+	<script src=" " type="text/javascript"></script>
     <script type="text/javascript" src="mapstraction.js"></script>
 	<div id="mapstraction" style="position:left;  height: 600px; width: 100%; border: 1px solid black"></div>
 	<script src="jquery.js" type="text/javascript"></script>
