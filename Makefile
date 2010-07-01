@@ -12,8 +12,8 @@ ${PROGRAM}: ${PROGRAM}.o
 ${PROGRAM}.o: ${PROGRAM}.c ${PROGRAM}.h heap.h types.h prioritysearch.h
 	gcc ${CFLAGS} -c ${PROGRAM}.c
 
-test-heap: test-heap.c heap.h
-	gcc ${CFLAGS} -o test-heap test-heap.c
+#test-heap: test-heap.c heap.h
+#	gcc ${CFLAGS} -o test-heap test-heap.c
 	
 check: ${CHECKSCRIPT} ${PROGRAM}
 	./${CHECKSCRIPT} ${PROGRAM}

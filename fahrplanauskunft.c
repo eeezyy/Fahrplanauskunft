@@ -28,15 +28,18 @@ int main(int argc, char *argv[])
 		exit(EXIT_SUCCESS);
 	}
 	//buffer for defining source and destination halt
-	char source[BUFFERSIZE];
-	char destination[BUFFERSIZE];
+	char buffer[BUFFERSIZE];
+	char *source;
+	char *destination;
 	
 	fprintf(stdout, "Start: ");
-	fgets(source, BUFFERSIZE, stdin);
-	chomp(source);
+	fgets(buffer, BUFFERSIZE, stdin);
+	chomp(buffer);
+	source = trimTabsAndBlanks(buffer);
 	fprintf(stdout, "Ziel: ");
-	fgets(destination, BUFFERSIZE, stdin);
-	chomp(destination);
+	fgets(buffer, BUFFERSIZE, stdin);
+	chomp(buffer);
+	destination = trimTabsAndBlanks(buffer);
 	if(strcmp(source, destination) == 0)
 	{
 		fprintf(stderr, "Sie befinden sich bereits an der eingegebenen Station.\n");

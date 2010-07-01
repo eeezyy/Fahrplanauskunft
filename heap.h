@@ -1,21 +1,22 @@
 // insert new node in heap
-heapnode *heapNodeInsert(heapnode **root, station *insert);
+heapnode *heapNodeInsert(heapnode **root, station *insert, int value, station *prev);
 // return the smallest node (station with minimal distance)
-station *heapNodeRemove(heapnode **heapAddress);
+heapnode *heapNodeRemove(heapnode **heapAddress);
 // core function for heap, merges two heap trees, returns the root node
 // normaly used to add a node to heap tree
 heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q);
 heapnode *mergeHeaps2(heapnode *heapAddress, heapnode *Q);
 station *searchHeapNode(heapnode *left, heapnode *right, station *halt);
 
-heapnode *heapNodeInsert(heapnode **root, station *insert) {
+heapnode *heapNodeInsert(heapnode **root, station *insert, int value, station *prev) {
 	heapnode *newNode = (heapnode *)malloc(sizeof(heapnode));
 	// initialize new heapnode
 	newNode->halt = insert;
 	newNode->dist = 1;
 	newNode->left = NULL;
 	newNode->right = NULL;
-
+	newNode->value = value;
+	newNode->prev = prev;
 	return mergeHeaps(root, newNode);
 }
 
@@ -43,7 +44,7 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 			break;
 		}
 		// compare which node is smaller
-		if(P->halt->lengthSum < Q->halt->lengthSum) {
+		if(P->value < Q->value) {
 			T = P->right;
 			P->right = R;
 			R = P;
@@ -79,17 +80,19 @@ heapnode *mergeHeaps(heapnode **heapAddress, heapnode *Q) {
 	}
 }
 
-station *heapNodeRemove(heapnode **heapAddress) {
+heapnode *heapNodeRemove(heapnode **heapAddress) {
 	if(heapAddress != NULL) {
 		if(*heapAddress != NULL) {
 			heapnode *root = *heapAddress;
 			heapnode *temp = root;
 			station *halt = root->halt;
+			halt->lengthSum = root->value;
+			halt->prev = root->prev;
 			// write new node to root
 			*heapAddress = mergeHeaps(&(*heapAddress)->left, root->right);
-			free(temp);
+			//free(temp);
 			// return removed node
-			return halt;
+			return temp;
 		}
 	}
 	return NULL;
@@ -155,7 +158,7 @@ heapnode *mergeHeaps2(heapnode *P, heapnode *Q) {
 			break;
 		}
 		// compare which node is smaller
-		if(P->halt->lengthSum < Q->halt->lengthSum) {
+		if(P->value < Q->value) {
 			T = P->right;
 			P->right = R;
 			R = P;

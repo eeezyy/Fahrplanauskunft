@@ -7,6 +7,8 @@ typedef struct node {
 	struct node *prev;
 	// distance from startStation
 	int lengthSum;
+	// counter for previous ways, used for destination
+	int count;
 	int visited;
 } station;
 
@@ -21,6 +23,7 @@ typedef struct edge {
 typedef struct treenode {
 	station *halt;
 	int value;
+	station *prev;
 	// distance = shortest path from node to NULL
 	// where left.dist >= right.dist
 	int dist;

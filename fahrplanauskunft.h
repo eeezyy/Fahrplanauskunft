@@ -31,6 +31,8 @@ int listClean(list **listRoot);
 void chomp(char *str);
 // search station object with station name
 station *searchHalt(char* halt, list **listRoot);
+// transforms a string to lower case
+void to_lower_case(char string[]);
 
 
 //void setValue(path* haltlist, char* st1, int time, char* st2);
@@ -270,6 +272,7 @@ station* initHalt(char *name, list **listRoot) {
 	stInit->p = NULL;
 	stInit->prev = NULL;
 	stInit->lengthSum = -1;
+	stInit->count = 0;
 	stInit->visited = NOTVISITED;
 	
 	return stInit;
@@ -313,5 +316,15 @@ station *searchHalt(char* halt, list **listRoot)
 		elem = elem->next;
 	}
 	return NULL;
+}
+
+void to_lower_case(char *string) {
+	int i;
+	printf("%s\n", string);
+	for(i = 0; i != '\0'; i++) {
+		string[i] = tolower(string[i]);
+	}
+	printf("%s\n", string);
+	//return string;
 }
 
